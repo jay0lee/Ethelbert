@@ -28,5 +28,5 @@ jobs:
     - name: Update version in update.xml and manifest.json
       run: |
         tmpfile=$(mktemp)
-        jq '.address = "abcde"' extension/manifest.json > "$tmp" && mv "$tmp" extension/manifest.json
+        jq '.version = "$extension_version"' extension/manifest.json > "$tmp" && mv "$tmp" extension/manifest.json
         cat extension/manifest.json
