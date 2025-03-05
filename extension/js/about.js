@@ -1,0 +1,1 @@
+id_ek8v.href=/gitee\.io/.test(location.host)?"https://xiangyuecn.gitee.io/docs/about.html":"https://xiangyuecn.github.io/Docs/about.html"

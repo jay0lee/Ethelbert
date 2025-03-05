@@ -1,0 +1,29 @@
+{
+  "action": {
+    "default_icon": "main.png"
+  },
+  "background": {
+    "service_worker": "sw.js",
+    "type": "module"
+  },
+  "description": "ACME client Chrome Extension",
+  "host_permissions": [
+    "*://ca.lan/",
+    "*://verifiedaccess.googleapis.com/"
+  ],
+  "manifest_version": 3,
+  "name": "Wile E.",
+  "oauth2": {
+      "client_id": "552232403861-0ogsmi2ph3nq3j1ivs51istn4sfpvms9.apps.googleusercontent.com",
+      "scopes": ["https://www.googleapis.com/auth/verifiedaccess"]
+    },
+  "permissions": [
+    "enterprise.deviceAttributes",
+    "enterprise.platformKeys",
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+  "update_url": "http://192.168.86.254:8000/update.xml",
+  "version": "3.0147"
+}

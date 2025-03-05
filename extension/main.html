@@ -1,0 +1,574 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAe1BMVEUDuu3///8AtuwAue1c0/QAt+1a0vSZ4/gOve4Ju+4AtOzf9v31/P4iw/DS8/yf5fnE7/tNzvMsxvHw+/7t+v7k+P2U4veO4PeA3Pbp+f7h9/3Y9f3I8Pxt1/Vi1PRQz/NDzPIzyPEWv+76/v/3/f+87fqn5/mI3/Z82vb+fQDoAAAA10lEQVQ4y63T2c7CIBCGYWamUwFZurfuy7/e/xVaeySlYmJ8T78nISQgPh0xU2pGZa1EfrazHJz5an2FT3brYKoul4UqAHx5Hhqoq6VTMAc4aER9acDjEviFPd2voP9gKykGVECHkzyBsRzvI+g1jWG5BFDIPXRKjqkcTKUwPISPbvsN9XpqA9DuehXsF4g64APALAY+AHkMVm+CzToNVld1NAmwE0zaJ0DBQughAcxZ66tLAGj6f/f2NdMgewXKGHSPgOTPfG/Dh0vqlAXlluefahaLT3UDvrAKrj7jLKkAAAAASUVORK5CYII=" />
+
+<title>ACME Chrome Extension Client</title>
+</head>
+
+<body>
+<script src="js/version.js"></script>
+<div class="main-load" style="padding-top:40vh;text-align:center;font-size:28px">Loading...</div>
+<div class="main" style="display:none">
+<div class="mainBox acmeReadDirGotoCORSState" style="display:none"></div>
+
+<div class="mainBox">
+	<span style="font-size:32px;font-weight:bold;color:#03baed;">
+		<span class="langEN clientNameEN">ACME Web Browser Client</span>
+	</span>
+	<span class="versionBox" style="font-size:14px;color:#03baed;margin-right:80px"></span>
+	<span style="display:inline-block">
+		<span class="langEN">Open source: </span>
+		<a href="https://github.com/xiangyuecn/ACME-HTML-Web-Browser-Client" target="_blank">GitHub >></a>
+		<span class="langCN">
+			| <a href="https://gitee.com/xiangyuecn/ACME-HTML-Web-Browser-Client" target="_blank">Gitee >></a>
+		</span>
+	</span>
+	
+	<style>
+                html { width: 800px;
+		       height: 600px; }
+		.feature_ul li{margin: 8px 0;}
+		.feature_ul i{
+			font-style: normal;
+			margin-right:8px;
+			display: inline-block;
+			vertical-align: middle;
+			background: #03baed;
+			color: #fff;
+			font-size: 14px;
+			padding: 2px 8px;
+			border-radius: 99px;
+		}
+	</style>
+</div>
+
+
+
+
+
+<div class="mainBox">
+	<div class="pd itemTitle">
+		<span class="langEN">Step 1: Select a Certificate Authority</span>
+	</div>
+	<div class="itemBox">
+		<div class="pd Bold">
+			<i class="must">*</i>
+			<span class="langEN">Certificate Authority ACME (v2, <a href="https://www.rfc-editor.org/rfc/rfc8555.html" target="_blank">RFC 8555</a>) Service URL:</span>
+		</div>
+		<div class="pd">
+			<label><input type="radio" name="choice_acmeURL" value="https://acme-v02.api.letsencrypt.org/directory" desckey="descLetsEncrypt">Let's Encrypt</label>
+			<label><input type="radio" name="choice_acmeURL" value="https://acme.zerossl.com/v2/DV90/directory" desckey="descZeroSSL">ZeroSSL</label>
+			<label><input type="radio" name="choice_acmeURL" value="https://dv.acme-v02.api.pki.goog/directory" desckey="descGoogle">Google</label>
+			<label>
+				<input type="radio" name="choice_acmeURL" value="manual">
+				<span class="langEN">Fill in the URL manually</span>
+			</label>
+			<label>
+				<input type="radio" name="choice_acmeURL" value="https://acme-staging-v02.api.letsencrypt.org/directory">
+				<span class="langEN">For testing, don't choose</span>
+			</label>
+		</div>
+		
+		<div style="font-size:13px;color:#aaa">
+			<div class="pd descAcmeURL descLetsEncrypt" style="display:none">
+				<a href="https://letsencrypt.org/" target="_blank">Let's Encrypt</a>:
+				<span class="langEN">Please follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
+			</div>
+			<div class="pd descAcmeURL descZeroSSL" style="display:none">
+				<a href="https://zerossl.com/" target="_blank">ZeroSSL</a>:
+				<span style="color:#f80">
+					<span class="langEN">This URL may need to be operated according to the prompts below to eliminate the problem of cross-domain inaccessibility.</span>
+				</span>
+				<span class="langEN">Before applying for a certificate, you need to follow ZeroSSL's <a href="https://zerossl.com/documentation/acme/" target="_blank">official documents</a>, register a ZeroSSL account and generate an EAB credential, and use this EAB credential every time you apply for a certificate, follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
+			</div>
+			<div class="pd descAcmeURL descGoogle" style="display:none">
+				<a href="https://pki.goog/" target="_blank">Google Trust Services</a>:
+				<span style="color:#f80">
+					<span class="langEN">This URL may need to be operated according to the prompts below to eliminate the problem of cross-domain inaccessibility.</span>
+				</span>
+				<span class="langEN">Before applying for a certificate, you need to follow Google's <a href="https://cloud.google.com/certificate-manager/docs/public-ca-tutorial" target="_blank">official documents</a>, generate an EAB credential in Google Cloud, and use this EAB credential every time you apply for a certificate, follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
+				<span style="color:#f80">
+					<span class="langEN">Note: Because the same Google EAB credential can only be bound to one ACME account (Private key), when you apply for a certificate for the first time, <span style="font-weight:bold;font-size:20px">you must also save the newly generated or manually filled ACME account private key in the second step</span>, this EAB credential must be used together with the saved ACME account private key when applying for a certificate next time.</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="pd FlexBox">
+			<div class="FlexItem">
+				<input class="in_acmeURL inputLang" style="width:100%"
+					placeholder-en="Please fill in the Certificate Authority ACME Service URL">
+			</div>
+			<div style="padding-left:12px">
+				<span class="mainBtn mainBtnMin" id="link1" style="padding:0 50px">
+					<span class="langEN">Read service directory</span>
+				</span>
+			</div>
+		</div>
+		<div class="acmeReadDirState"></div>
+	</div>
+</div>
+
+
+
+
+
+<div class="mainBox">
+	<div class="pd itemTitle">
+		<span class="langEN">Step 2: Certificate Configuration</span>
+	</div>
+	<div class="step2Hide step1Show">
+		<div class="itemBox" style="color:#999">
+			<span class="langEN">Waiting, please complete step 1 first...</span>
+		</div>
+	</div>
+	<div class="step1Hide step2Show">
+		
+		
+		<div class="pd" style="font-size:13px;color:#aaa">
+			<span class="langEN">Reminder: If you have applied for a certificate last time, you can drag and drop the downloaded and saved record LOG file to this page, and the last configuration information will be automatically filled in.</span>
+		</div>
+		
+		
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Certificate keys:</span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN">The generated or filled private key is only used for ACME interface signature, and supports <i class="i">RSA (2048-bit+)</i> and <i class="i">ECC (<span class="eccCurveNames"></span> curve)</i> private keys; <span style="color:#f80">Note: The type of certificate private key determines whether the applied certificate is an RSA certificate or a ECC(ECDSA) certificate, RSA type is more widely applicable and more common;</span> this client will not save or send this private key to anyone else; this private key needs to be used when deploying to the server after the certificate is issued; it is recommended to generate a new certificate private key every time you apply for a certificate.</span>
+			</div>
+			<div class="pd">
+				<label>
+					<input type="radio" name="choice_privateKey" value="generateRSA">
+					<span class="langEN">Generate RSA private key</span>
+				</label>
+				<label>
+					<input type="radio" name="choice_privateKey" value="generateECC">
+					<span class="langEN">Generate ECC private key</span>
+				</label>
+				<label>
+					<input type="radio" name="choice_privateKey" value="manual">
+					<span class="langEN">Manually fill in the private key</span>
+				</label>
+			</div>
+			<div class="privateKeyBox">
+				<textarea class="in_privateKey inputLang" style="width:100%;height:60px"
+					placeholder-en="Please fill in the pem private key. The private key text starts with -----BEGIN PRIVATE KEY----- (this is in PKCS#8 format, and PKCS#1 format with RSA|EC characters in it is also supported)"></textarea>
+			</div>
+			<div class="privateKeyState"></div>
+		</div>
+		
+		
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Private key of ACME account:</span>
+			</div>
+			<div class="accountKeyBox">
+				<textarea class="in_accountKey inputLang" style="width:100%;height:60px">-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgYHs0g/m//DuiIpFw
+KuBPCRwdeIspWAdGK29OZtClcNmhRANCAAS3Qe5IvDICnd+qM71fn1hZA42rGRgg
+0amUCTKGxKRoa5ATpOaWE/JuQ3Cep7s9RH2wTrQ2wZI/35aeN/FE8/a6
+-----END PRIVATE KEY-----</textarea>
+			</div>
+		</div>
+		
+		
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Contact email of ACME account:</span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN">This email address is used by the certificate authority to send you emails, such as a reminder of renewal notice before the certificate expires.</span>
+			</div>
+			<div class="FlexBox">
+				<div class="FlexItem">
+					<input class="in_email inputLang" style="width:100%" value="jay0lee@gmail.com"
+						placeholder-en="Please fill in one of your email addresses">
+				</div>
+				<div style="padding-left:15px;line-height:30px;font-size:13px;color:#aaa">
+					<label>
+						<input type="checkbox" class="choice_email_store">
+						<span class="langEN">Remember</span>
+					</label>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="itemBox eabShow">
+			<div class="pd Bold">
+				<span class="langEN">EAB Credentials:</span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN">The current ACME service requires external account binding credentials, such as ZeroSSL: You can obtain this credentials in the Developer of the ZeroSSL management console, so you need to register a ZeroSSL account first.</span>
+			</div>
+			<div class="FlexBox" style="line-height:30px">
+				<div><i class="must">*</i>EAB KID:</div>
+				<div class="FlexItem" style="padding:0 50px 0 6px">
+					<input class="in_eab_kid inputLang" style="width:100%"
+						placeholder-en="Please fill in EAB KID">
+				</div>
+				<div style="padding:0 6px 0 0"><i class="must">*</i>HMAC KEY:</div>
+				<div class="FlexItem">
+					<input class="in_eab_key inputLang" style="width:100%"
+						placeholder-en="Please fill in EAB HMAC KEY">
+				</div>
+			</div>
+		</div>
+		
+		<div class="pd termsAgreeBox">
+			<label>
+				<input type="checkbox" class="choice_termsAgree">
+				<span class="termsAgreeTips"></span>
+			</label>
+		</div>
+		
+		<div class="Center" style="padding:15px 0 10px">
+			<span class="mainBtn" id="configStepClick" style="width:300px">
+				<span class="langEN">OK</span>
+			</span>
+		</div>
+		<div class="configStepState"></div>
+		
+	</div>
+</div>
+
+
+
+
+
+
+<div class="mainBox">
+	<div class="pd itemTitle">
+		<span class="langEN">Step 3: Verify Ownership</span>
+	</div>
+	<div class="step3Hide step2Show step1Show">
+		<div class="itemBox" style="color:#999">
+			<span class="langEN">Waiting, please complete step 2 first...</span>
+		</div>
+	</div>
+	<div class="step1Hide step2Hide step3Show">
+		
+		<div class="pd" style="font-size:13px;color:#f80">
+			<span class="langEN">Please select a suitable verification method and then complete the corresponding configuration operations according to the displayed prompts.</span>
+		</div>
+		
+		<div class="verifyBox"></div>
+<script src="js/verify.js"></script>
+		
+		<div class="itemBox">
+			<div class="pd" style="font-size:15px">
+				<span class="langEN">Please select the corresponding verify method for each domain name, and perform the corresponding configuration operation according to the displayed prompts; <span style="color:#cb1d1d">after all domain names are configured, click the "Start Verify" button below to verify,</span> if the verify fails, you need to go back to the step 2 Start the operation.</span>
+			</div>
+			
+			<div class="Center" style="padding:15px 0 10px">
+				<span class="mainBtn verifyStepBtn" id="verifyStepClick" style="width:300px">
+					<span class="langEN">Start Verify</span>
+				</span>
+				<span class="mainBtn verifyRunStopBtn" id="verifyRunStopClick" style="width:300px;background:#aaa">
+					<span class="langEN">Cancel</span>
+				</span>
+				<span class="mainBtn finalizeOrderBtn" id="finalizeOrderClick" style="width:300px">
+					<span class="langEN">Retry</span>
+				</span>
+			</div>
+			<div class="verifyStepState"></div>
+		</div>
+		
+	</div>
+</div>
+
+
+
+
+
+
+<div class="mainBox">
+	<div class="pd itemTitle">
+		<span class="langEN">Step 4: Download and save the certificate PEM file</span>
+	</div>
+	<div class="step4Hide step3Show step2Show step1Show">
+		<div class="itemBox" style="color:#999">
+			<span class="langEN">Waiting, please complete step 3 first...</span>
+		</div>
+	</div>
+	<div class="step1Hide step2Hide step3Hide step4Show">
+	
+	
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Save certificate PEM file: </span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN"><span style="color:#f80">This file must be saved,</span> please click the download button to download, or copy the text content of the certificate and save it as <i class="i downloadCertFileName"></i> file (PEM plain text format); the file name suffix can be changed to <i class="i">.crt </i> or <i class="i">.cer </i>, so that it can be directly double-clicked to open and view in Windows. This PEM format file already contains your domain name certificate and complete certificate chain. The first CERTIFICATE in the text is your domain name certificate, followed by the intermediate certificate and root certificate of the certificate authority, if necessary, you can split it into multiple .pem files.</span>
+			</div>
+			<div class="FlexBox">
+				<div class="FlexItem">
+					<textarea class="txt_downloadCert" style="width:100%;height:160px" readonly></textarea>
+				</div>
+				<div style="padding-left:10px;line-height:30px;font-size:13px;color:#aaa">
+					<div class="mainBtn" id="downloadBtnClickCert">
+						<span class="langEN">Download</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Save the certificate private key KEY file: </span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN">Please click the download button to download, or copy and save the text content of the private key as <i class="i downloadKeyFileName"></i> file (PEM plain text format, the .key suffix can be modified to .pem by yourself). If you manually filled in the certificate private key in the step 2, the certificate private key here is exactly the same as what you filled in, and you don’t need to save it repeatedly; <span style="color:#f80">if you are a newly created certificate private key, you must download and save it This certificate private key file.</span></span>
+			</div>
+			<div class="FlexBox">
+				<div class="FlexItem">
+					<textarea class="txt_downloadKey" style="width:100%;height:80px" readonly></textarea>
+				</div>
+				<div style="padding-left:10px;line-height:30px;font-size:13px;color:#aaa">
+					<div class="mainBtn" id="downloadBtnClickKey">
+						<span class="langEN">Download</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="itemBox">
+			<div class="pd Bold">
+				<i class="must">*</i>
+				<span class="langEN">Save the record LOG file: </span>
+			</div>
+			<div class="pd" style="font-size:13px;color:#aaa">
+				<span class="langEN">It is recommended to download and save this file. This record file contains all data, including: certificate PEM text, certificate private key PEM text, account private key PEM text, and all configuration parameters. Next time you need to renew a new certificate, you can drag and drop the record file directly into this page, and all parameters will be filled in automatically.</span>
+			</div>
+			<div class="FlexBox">
+				<div class="FlexItem">
+					<textarea class="txt_downloadLog" style="width:100%;height:80px" readonly></textarea>
+				</div>
+				<div style="padding-left:10px;line-height:30px;font-size:13px;color:#aaa">
+					<div class="mainBtn" id="downloadBtnClickLog">
+						<span class="langEN">Download</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+</div>
+
+<div class="toastState" style="display:none;position:fixed;padding:10px;bottom:10px;right:10px;width:360px;max-height:120px;overflow-y:auto;background:#fff;box-shadow: 0px 0px 3px #aaa;border-radius: 10px;"></div>
+
+</div>
+
+
+
+<style>
+body{
+	word-wrap: break-word;
+	--word-break: break-all;
+	background:#f5f5f5 center top no-repeat;
+	background-size: auto 680px;
+}
+pre{
+	white-space:pre-wrap;
+}
+label,label *{
+	cursor: pointer;
+}
+label:hover{
+	color:#06c;
+}
+a{
+	text-decoration: none;
+	color:#06c;
+	cursor: pointer;
+}
+a:hover{
+	color:#f00;
+}
+input, textarea {
+	--outline: 0;
+	border: 1px solid #999;
+	padding: 2px;
+	box-sizing: border-box;
+	font-size: 15px;
+	line-height:24px;
+}
+
+.main{
+	max-width:900px;
+	margin:0 auto;
+	padding-bottom:80px
+}
+
+.mainBox{
+	margin-top:12px;
+	padding: 12px;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 2px 2px 3px #aaa;
+}
+
+
+.mainBtn{
+	display: inline-block;
+	cursor: pointer;
+	border: none;
+	border-radius: 3px;
+	background: #f80;
+	color:#fff;
+	padding: 0 15px;
+	line-height: 36px;
+	height: 36px;
+	overflow: hidden;
+	vertical-align: middle;
+}
+.mainBtnMin{
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	padding: 0 12px;
+}
+.mainBtn:hover{
+	opacity:0.8;
+}
+.mainBtn:active{
+	opacity:1;
+	background: #f00;
+}
+
+.pd{
+	padding:0 0 8px 0;
+}
+.pdT{
+	padding:8px 0 0 0;
+}
+.lb{
+	display:inline-block;
+	vertical-align: middle;
+	background:#00940e;
+	color:#fff;
+	font-size:14px;
+	padding:2px 8px;
+	border-radius: 99px;
+}
+
+.Fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.Center{
+	text-align: center;
+}
+.CenterV {
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -moz-flex;
+	display: flex;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	-moz-align-items: center;
+	align-items: center;
+}
+.FlexBox {
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -moz-flex;
+	display: flex;
+}
+.FlexBoxV{
+	-webkit-flex-direction:column;
+	-ms-flex-direction:column;
+	-moz-flex-direction:column;
+	flex-direction:column;
+}
+.FlexCenter{
+	-webkit-box-pack:center;
+	-ms-box-pack:center;
+	-moz-box-pack:center;
+	box-pack:center;
+	-webkit-justify-content:center;
+	-ms-justify-content:center;
+	-moz-justify-content:center;
+	justify-content:center;
+}
+.FlexCenterV{
+	-webkit-box-align:center;
+	-ms-box-align:center;
+	-moz-box-align:center;
+	box-align:center;
+	-webkit-align-items:center;
+	-ms-align-items:center;
+	-moz-align-items:center;
+	align-items:center;
+}
+.FlexItem {
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	-moz-flex: 1;
+	flex: 1;
+}
+
+
+.Bold{
+	font-weight: bold;
+}
+.code{
+	padding: 15px;
+	background-color: #000;
+	vertical-align: middle;
+	color: #fff;
+	font-size: 14px;
+	white-space: pre-wrap;
+	border-radius: 6px;
+	font-style: normal;
+}
+.i{
+	padding: 2px 4px;
+	background-color: #f6f6f6;
+	vertical-align: top;
+	color: #c7254e;
+	font-size: 12px;
+	white-space: pre-wrap;
+	border-radius: 4px;
+	font-style: normal;
+}
+i.must{
+	color:red;
+	font-style:normal;
+}
+.itemTitle{
+	font-size: 24px;
+	font-weight: bold;
+	color: #03baed;
+}
+.itemBox{
+	padding:8px;
+	margin-bottom:6px;
+	border:1px #ccc dashed;
+	border-radius: 6px;
+}
+</style>
+<script src="js/acme1.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/acme2.js"></script>
+<script src="js/cryptography.js"></script>
+<script src="js/common.js"></script>
+<script src="js/launch.js"></script>
+<script src="js/onclick.js"></script>
+</body>
+</html>
