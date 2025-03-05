@@ -25,3 +25,8 @@ jobs:
         echo "Extension version will be ${extension_version}"
         echo "extension_version=${extension_version}" >> $GITHUB_ENV
         
+    - name: Update version in update.xml and manifest.json
+      run: |
+        tmpfile=$(mktemp)
+        jq '.address = "abcde"' extension/manifest.json > "$tmp" && mv "$tmp" extension/manifest.json
+        cat extension/manifest.json
