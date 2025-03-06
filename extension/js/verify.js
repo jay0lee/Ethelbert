@@ -112,7 +112,7 @@ var verifyBoxShow=function(){
 			  ab2base64str(
 				  CBOR.encode(
 					  {format: "chromeos-verified-access-challenge-response",
-			     "challenge_response": challenge_response}
+			     "challenge_response": ab2base64str(challenge_response)}
 				  )
 			  )
 		  )
