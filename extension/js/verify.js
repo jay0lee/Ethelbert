@@ -104,13 +104,13 @@ var verifyBoxShow=function(){
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
 		getVAChallenge().then(challenge_response => {
-		  window.challenge_response = challenge_response;
+		  window.challenge_response = ab2base64str(challenge_response);
 		  console.log('challenge_response:');
 		  console.log(window.challenge_response);
 		});
 	});
 	for(var i0=0;i0<domains.length;i0++){
 		var el=$(".choice_authChall_"+i0+"_0");
-		el[0]&&el[0].click(); //默认选中每个域名的第一个
+		el[0]&&el[0].click();
 	}
 };
