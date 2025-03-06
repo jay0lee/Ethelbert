@@ -18,6 +18,28 @@ var decodestr2ab = function(str) {
     return bytes.buffer;
   }
 
+async function getVAChallenge() {
+  var challenge;
+  var challenge_response;
+  var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
+  var challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?key=' + apiKey;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('POST', challengeUrlString, false);
+  xmlhttp.send(null);
+  challenge = JSON.parse(xmlhttp.responseText).challenge;
+  console.log('challenge: ' + challenge);
+  var options = {
+      'scope': 'USER',
+      'challenge': decodestr2ab(challenge),
+      'registerKey': {
+      'algorithm': 'ECDSA',
+      },
+    }
+  console.log('options:');
+  console.log(options);
+  return await chrome.enterprise.platformKeys.challengeKey(options);
+}
+
 var verifyBoxShow=function(){
 	"use strict";
 	var boxEl=$(".verifyBox").html("");
@@ -81,6 +103,9 @@ var verifyBoxShow=function(){
 			</div>
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
+		var challenge_response = await getVAChallenge();
+		console.log('challenge_response:');
+		console.log(challenge_response);
 	});
 	for(var i0=0;i0<domains.length;i0++){
 		var el=$(".choice_authChall_"+i0+"_0");
