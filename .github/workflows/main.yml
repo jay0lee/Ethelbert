@@ -44,6 +44,19 @@ jobs:
         echo -e "$EXTENSION_KEY" > "$key_file"
         file "$key_file"
         google-chrome-stable --pack-extension=./extension --pack-extension-key="$key_file"
-        ls -l
+        mv -v extension.crx hosted/ethelbert.crx
+
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add --all
+        git add *
+        git diff --quiet && git diff --staged --quiet || git commit -am "Publish  ${extension_version} [ci skip]"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }} 
         
         
