@@ -297,11 +297,11 @@ window.ACME={
 		},"");
 		var resp = await requestA(url, sendData);
 		var data=resp.data;
-		if (data.status=="pending") {
+		if (data.status == "pending") {
 			CLog(tag, 0, "pending...");
                         var challenge_url = data.challenges[0].url;
 			var csendData = await ACME.GetJwsA({
-					//kid: ACME.StepData.account.url,
+					kid: ACME.StepData.account.url,
 				        jwk: X509.PublicKeyJwk(config.accountKey),
 					nonce: await ACME.GetNonceA(),
 					url: challenge_url
@@ -309,7 +309,7 @@ window.ACME={
 			var cresp = await requestA({url: challenge_url, nocheck: true}, csendData);
 			return True(false, 1000, "pending...");
 		}
-		if (data.status=="valid") {
+		if (data.status == "valid") {
 			CLog(tag, 0, "valid OK");
 			return True(true);
 		}
