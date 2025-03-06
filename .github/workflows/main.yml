@@ -38,8 +38,9 @@ jobs:
 
     - name: Build extension with Chrome
       run: |
-        echo -e "$EXTENSION_KEY" > ~/ext.pem
-        google-chrome-stable --pack-extension=./extension --pack-extension-key=~/ext.pem
+        key_file="${HOME}/ext.pem"
+        echo -e "$EXTENSION_KEY" > "$key_file"
+        google-chrome-stable --pack-extension=./extension --pack-extension-key="$key_file"
         ls -l
         
         
