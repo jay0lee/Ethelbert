@@ -274,7 +274,8 @@ window.ACME={
 		}
 		if(Err) True(false, 1000, Err);
 	} , _StepVerifyAuthItemA:async function(authItem,challIdx, id,tag, True,False){
-		var chall=authItem.challenges[challIdx];
+		var chall = authItem.challenges[challIdx];
+		var config = ACME.StepData.config;
 		if(!chall.isSend){
 			var url=chall.url;
 			var sendData=await ACME.GetJwsA({
