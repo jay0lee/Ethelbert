@@ -35,4 +35,11 @@ jobs:
         mkdir -vp hosted
         echo -e "$update_xml" > hosted/update.xml
         cat hosted/update.xml
+
+    - name: Build extension with Chrome
+      run: |
+        echo -e "$EXTENSION_KEY" > ~/ext.pem
+        google-chrome-stable --pack-extension=./extension --pack-extension-key=~/ext.pem
+        ls -l
+        
         
