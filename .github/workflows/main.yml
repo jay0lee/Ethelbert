@@ -30,3 +30,8 @@ jobs:
         tmpfile=$(mktemp)
         jq ".version = \"$extension_version\"" extension/manifest.json > "$tmpfile" && mv "$tmpfile" extension/manifest.json
         cat extension/manifest.json
+        update_xml=$(cat update.xml.template)
+        update_xml="${update_xml/EXTENSION_VERSION/"$extension_version"}"
+        echo -e "$update_xml" > hosted/update.xml
+        cat hosted/update.xml
+        
