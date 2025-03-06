@@ -5,39 +5,6 @@
 (function(){
 "use strict";
 
-var decodestr2ab = function(str) {
-    var binary_string =  window.atob(str);
-    var len = binary_string.length;
-    var bytes = new Uint8Array(len);
-    for (var i = 0; i < len; i++)        {
-        bytes[i] = binary_string.charCodeAt(i);
-    }
-    return bytes.buffer;
-  }
-
-function getVAChallenge() {
-  var challenge;
-  var challenge_response;
-  var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
-  var challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?key=' + apiKey;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('POST', challengeUrlString, false);
-  xmlhttp.send(null);
-  challenge = JSON.parse(xmlhttp.responseText).challenge;
-  console.log('challenge: ' + challenge);
-  var options = {
-      'scope': 'USER',
-      'challenge': decodestr2ab(challenge),
-      'registerKey': {
-      'algorithm': 'ECDSA',
-      },
-    }
-  console.log('options:');
-  console.log(options);
-  var callChallengeKey = chrome.enterprise.platformKeys.challengeKey;
-  return callChallengeKey(options, function(result) { console.log(result); });
-}
-
 /************** ACME client implementation **************/
 //RFC8555: https://www.rfc-editor.org/rfc/rfc8555.html
 window.ACME={
@@ -321,35 +288,19 @@ window.ACME={
 				chall.isSend=true;
 		}
 		
-		//重新查询一下状态
-		var url=authItem.authUrl;
-		var sendData=await ACME.GetJwsA({
+		var url = authItem.authUrl;
+		var sendData = await ACME.GetJwsA({
 			kid: ACME.StepData.account.url
 			,nonce: await ACME.GetNonceA()
 			,url: url
 		},"");
 		var resp = await requestA(url, sendData);
 		var data=resp.data;
-		if (data.status == "pending") {
+		if (data.status=="pending") {
 			CLog(tag, 0, "pending...");
-			var getVAC = getVAChallenge;
-			var getN = ACME.GetNonceA;
-			var getJ = ACME.GetJwsA;
-			return True(false, 1000, getVAC(function(challenge_response) {
-			  getN(function(nonce) {
-	                    getJ({
-                                        kid: ACME.StepData.account.url,
-                                        "nonce": nonce,
-                                        url: challenge_url}, {'attObj': challenge_response}, function(challSendData) {
-                                          var cresp = requestA({url:challenge_url, nocheck:true}, challSendData);
-                                          console.log('challenge response:');
-                                          console.log(cresp);
-                                          return True(false, 1000, "pending...");
-			                });
-			  });
-			}));
+			return True(false, 1000, "pending...");
 		}
-		if(data.status=="valid"){
+		if (data.status=="valid") {
 			CLog(tag, 0, "valid OK");
 			return True(true);
 		}
