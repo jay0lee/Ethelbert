@@ -103,7 +103,7 @@ var verifyBoxShow=function(){
 			</div>
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
-		var challenge_response = await getVAChallenge();
+		var challenge_response = getVAChallenge();
 		console.log('challenge_response:');
 		console.log(challenge_response);
 	});
