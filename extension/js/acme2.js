@@ -303,7 +303,7 @@ window.ACME={
 					kid: ACME.StepData.account.url
 					,nonce: await ACME.GetNonceA()
 					,url: url
-				}, {payload: window.challenge_response});
+				}, {attObj: window.challenge_response});
 			var cresp = await requestA({url: challenge_url, nocheck: true}, csendData);
 			return True(false, 1000, "pending...");
 		}
