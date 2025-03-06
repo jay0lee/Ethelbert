@@ -108,9 +108,14 @@ var verifyBoxShow=function(){
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
 		getVAChallenge().then(challenge_response => {
-		  window.challenge_response = {format: "chromeos-verified-access-challenge-response",
+		  window.challenge_response = base64ToUrlSafe(
+			  ab2base64str(
+				  CBOR.encode(
+					  {format: "chromeos-verified-access-challenge-response",
 			     "challenge_response": challenge_response}
-		  window.challenge_response = CBOR.encode(window.challenge_response)
+				  )
+			  )
+		  )
 		  console.log('challenge_response:');
 		  console.log(window.challenge_response);
 		});
