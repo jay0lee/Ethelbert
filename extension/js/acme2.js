@@ -299,14 +299,7 @@ window.ACME={
 		var data=resp.data;
 		if (data.status == "pending") {
 			CLog(tag, 0, "pending...");
-                        var challenge_url = data.challenges[0].url;
-			var csendData = await ACME.GetJwsA({
-					kid: ACME.StepData.account.url,
-				        nonce: await ACME.GetNonceA(),
-					url: challenge_url
-				}, {attObj: window.challenge_response});
-			var cresp = await requestA({url: challenge_url, nocheck: true}, csendData);
-			return True(false, 1000, "pending...");
+                        return True(false, 1000, "pending...");
 		}
 		if (data.status == "valid") {
 			CLog(tag, 0, "valid OK");
