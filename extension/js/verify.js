@@ -112,7 +112,9 @@ var verifyBoxShow=function(){
 			  ab2base64str(
 				  CBOR.encode(
 					  {fmt: "chromeos",
-			     "challenge_response": ab2base64str(challenge_response)}
+					   attStmt: {
+			     			"challenge_response": ab2base64str(challenge_response)
+					   }}
 				  )
 			  )
 		  )
