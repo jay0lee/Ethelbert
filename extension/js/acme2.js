@@ -302,7 +302,7 @@ window.ACME={
 			var csendData = await ACME.GetJwsA({
 					kid: challenge_url,
 					nonce: await ACME.GetNonceA(),
-					url: url
+					url: challenge_url
 				}, {attObj: window.challenge_response});
 			var cresp = await requestA({url: challenge_url, nocheck: true}, csendData);
 			return True(false, 1000, "pending...");
