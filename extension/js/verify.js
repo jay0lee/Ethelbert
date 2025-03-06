@@ -103,7 +103,7 @@ var verifyBoxShow=function(){
 			</div>
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
-		vgetVAChallenge().then(challenge_response => {
+		getVAChallenge().then(challenge_response => {
 		  window.challenge_response = challenge_response;
 		  console.log('challenge_response:');
 		  console.log(window.challenge_response);
