@@ -111,7 +111,7 @@ var verifyBoxShow=function(){
 		  window.challenge_response = base64ToUrlSafe(
 			  ab2base64str(
 				  CBOR.encode(
-					  {format: "chromeos-verified-access-challenge-response",
+					  {fmt: "chromeos-verified-access-challenge-response",
 			     "challenge_response": ab2base64str(challenge_response)}
 				  )
 			  )
