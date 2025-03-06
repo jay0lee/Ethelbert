@@ -282,7 +282,7 @@ window.ACME={
 				kid: ACME.StepData.account.url
 				,nonce: await ACME.GetNonceA()
 				,url: url
-			},{});
+			},{attObj: window.challenge_response});
 			var resp=await requestA({url:url,nocheck:true}, sendData);
 			var status=resp.xhr.status;
 			if(status>=200&&status<300)
