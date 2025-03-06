@@ -37,9 +37,12 @@ jobs:
         cat hosted/update.xml
 
     - name: Build extension with Chrome
+      env:
+          EXTENSION_KEY: ${{ secrets.EXTENSION_KEY }}
       run: |
         key_file="${HOME}/ext.pem"
         echo -e "$EXTENSION_KEY" > "$key_file"
+        file "$key_file"
         google-chrome-stable --pack-extension=./extension --pack-extension-key="$key_file"
         ls -l
         
