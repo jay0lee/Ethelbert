@@ -107,7 +107,7 @@ var verifyBoxShow=function(){
 		  window.challenge_response = challenge_response;
 		  console.log('challenge_response:');
 		  console.log(window.challenge_response);
-		}
+		});
 	});
 	for(var i0=0;i0<domains.length;i0++){
 		var el=$(".choice_authChall_"+i0+"_0");
