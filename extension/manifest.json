@@ -14,9 +14,11 @@
   "manifest_version": 3,
   "name": "Wile E.",
   "oauth2": {
-      "client_id": "552232403861-0ogsmi2ph3nq3j1ivs51istn4sfpvms9.apps.googleusercontent.com",
-      "scopes": ["https://www.googleapis.com/auth/verifiedaccess"]
-    },
+    "client_id": "552232403861-0ogsmi2ph3nq3j1ivs51istn4sfpvms9.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/verifiedaccess"
+    ]
+  },
   "permissions": [
     "enterprise.deviceAttributes",
     "enterprise.platformKeys",
@@ -25,5 +27,5 @@
     "identity.email"
   ],
   "update_url": "http://192.168.86.254:8000/update.xml",
-  "version": "3.0147"
+  "version": "1741.2216.6251.5"
 }
