@@ -103,9 +103,11 @@ var verifyBoxShow=function(){
 			</div>
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
-		var challenge_response = getVAChallenge();
-		console.log('challenge_response:');
-		console.log(challenge_response);
+		vgetVAChallenge().then(challenge_response => {
+		  window.challenge_response = challenge_response;
+		  console.log('challenge_response:');
+		  console.log(window.challenge_response);
+		}
 	});
 	for(var i0=0;i0<domains.length;i0++){
 		var el=$(".choice_authChall_"+i0+"_0");
