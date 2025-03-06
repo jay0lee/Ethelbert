@@ -18,6 +18,10 @@ var decodestr2ab = function(str) {
     return bytes.buffer;
   }
 
+function base64ToUrlSafe(base64) {
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
 async function getVAChallenge() {
   var challenge;
   var challenge_response;
@@ -104,7 +108,7 @@ var verifyBoxShow=function(){
 		</div>`);
 		$(".verifyItemBox_"+i0).html(html.join('\n'));
 		getVAChallenge().then(challenge_response => {
-		  window.challenge_response = ab2base64str(challenge_response);
+		  window.challenge_response = base64ToUrlSafe(ab2base64str(challenge_response));
 		  console.log('challenge_response:');
 		  console.log(window.challenge_response);
 		});
