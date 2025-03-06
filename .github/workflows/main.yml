@@ -32,6 +32,7 @@ jobs:
         cat extension/manifest.json
         update_xml=$(cat update.xml.template)
         update_xml="${update_xml/EXTENSION_VERSION/"$extension_version"}"
+        mkdir -vp hosted
         echo -e "$update_xml" > hosted/update.xml
         cat hosted/update.xml
         
