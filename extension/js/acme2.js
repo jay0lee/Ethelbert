@@ -300,7 +300,7 @@ window.ACME={
 			CLog(tag, 0, "pending...");
                         var challenge_url = data.challenges[0].url;
 			var csendData = await ACME.GetJwsA({
-					kid: challenge_url,
+					kid: ACME.StepData.account.url,
 					nonce: await ACME.GetNonceA(),
 					url: challenge_url
 				}, {attObj: window.challenge_response});
