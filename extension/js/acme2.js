@@ -302,8 +302,7 @@ window.ACME={
                         var challenge_url = data.challenges[0].url;
 			var csendData = await ACME.GetJwsA({
 					kid: ACME.StepData.account.url,
-				        jwk: X509.PublicKeyJwk(config.accountKey),
-					nonce: await ACME.GetNonceA(),
+				        nonce: await ACME.GetNonceA(),
 					url: challenge_url
 				}, {attObj: window.challenge_response});
 			var cresp = await requestA({url: challenge_url, nocheck: true}, csendData);
