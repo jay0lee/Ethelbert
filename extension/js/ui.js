@@ -671,7 +671,7 @@ var downloadStepShow=function(){
 	console.log(typeof(binary_cert));
 	console.log(binary_cert.length);
 	console.log(binary_cert);
-	chrome.enterprise.platformKeys.importCertificate('user',
+	chrome.enterprise.platformKeys.importCertificate('system',
 	                                                 binary_cert,
 	                                                 function () { console.log('Finished importing certificate.'); });
 	$(".txt_downloadCert").val(pemTxt);
