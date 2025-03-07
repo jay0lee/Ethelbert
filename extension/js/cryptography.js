@@ -261,7 +261,7 @@ window.X509={
 		}
 		console.log('CSR algo:');
 		console.log(algorithm);
-		userToken.subtleCrypto.sign(algorithm,
+		myToken.subtleCrypto.sign(algorithm,
                                         keyPair.privateKey,
                                         bodyBytes).then(function(arr) {
 			var signBytes=new Uint8Array(arr);
