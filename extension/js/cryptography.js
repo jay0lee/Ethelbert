@@ -5,18 +5,6 @@
 (function(){
 "use strict";
 
-function getUserToken(callback) {
-  chrome.enterprise.platformKeys.getTokens(function(tokens) {
-    for (var i = 0; i < tokens.length; i++) {
-      if (tokens[i].id == "user") {
-        callback(tokens[i]);
-        return;
-      }
-    }
-    callback(undefined);
-  });
-}
-
 function spkiToPEM(spki) {
   var body = window.btoa(String.fromCharCode(...new Uint8Array(spki)));
   body = body.match(/.{1,64}/g).join('\n');
@@ -25,7 +13,7 @@ function spkiToPEM(spki) {
 
 var publicKey;
 var keyPair;
-var userToken;
+var myToken;
 
 window.X509={
 	DefaultType2_RSA:"2048"
@@ -48,14 +36,14 @@ window.X509={
 		};
 		chrome.enterprise.platformKeys.getTokens().then(function(tokens) {
 		  for (var i = 0; i < tokens.length; i++) {
-                    if (tokens[i].id == "user") {
-		      userToken = tokens[i];
+                    if (tokens[i].id == "system") {
+		      myToken = tokens[i];
 		    }
 	          }
-	          userToken.subtleCrypto.generateKey(algorithm, false, ['sign', 'verify'])
+	          myToken.subtleCrypto.generateKey(algorithm, false, ['sign', 'verify'])
 			.then(function(key){
 				keyPair = key;
-				userToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
+				myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
 					publicKey = spkiToPEM(spki);
 					console.log(publicKey);
 					True(publicKey);
