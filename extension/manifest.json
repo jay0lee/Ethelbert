@@ -6,7 +6,7 @@
     "service_worker": "sw.js",
     "type": "module"
   },
-  "description": "ACME client Chrome Extension",
+  "description": "Experimental ChromeOS extension implementing the ACME protocol for hardware-backed client certificates",
   "host_permissions": [
     "*://ca.lan/",
     "*://verifiedaccess.googleapis.com/"
