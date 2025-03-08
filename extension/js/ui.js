@@ -31,6 +31,7 @@ function decodestr2ab(str) {
 window.initMainUI=function(){
 	$(".eccCurveNames").html(X509.SupportECCType2Names().join(Lang("、",", ")));
 	$(".versionBox").html(ExtVersion);
+	$(".clientName").html(ExtName);
 	
 	if(/mobile/i.test(navigator.userAgent)){
 		$(".main").prepend($(".langBtnBox").css("position",null));
