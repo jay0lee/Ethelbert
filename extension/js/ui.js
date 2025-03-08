@@ -30,7 +30,7 @@ function decodestr2ab(str) {
 /************** UI: Initialize on Launch **************/
 window.initMainUI=function(){
 	$(".eccCurveNames").html(X509.SupportECCType2Names().join(Lang("、",", ")));
-	$(".versionBox").html(ExtName + " " + ExtVersion);
+	$(".versionBox").html(ExtVersion);
 	
 	if(/mobile/i.test(navigator.userAgent)){
 		$(".main").prepend($(".langBtnBox").css("position",null));
