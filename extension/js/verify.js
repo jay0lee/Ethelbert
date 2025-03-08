@@ -34,10 +34,10 @@ async function getVAChallenge() {
   console.log('challenge: ' + challenge);
   var options = {
       'scope': 'USER',
-      'token': 'system',
       'challenge': decodestr2ab(challenge),
       'registerKey': {
-        'algorithm': 'ECDSA',
+        //'algorithm': 'ECDSA',
+	'token': 'system',
       },
     }
   console.log('options:');
