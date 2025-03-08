@@ -56,41 +56,10 @@
 			<span class="langEN">Certificate Authority ACME (v2, <a href="https://www.rfc-editor.org/rfc/rfc8555.html" target="_blank">RFC 8555</a>) Service URL:</span>
 		</div>
 		<div class="pd">
-			<label><input type="radio" name="choice_acmeURL" value="https://acme-v02.api.letsencrypt.org/directory" desckey="descLetsEncrypt">Let's Encrypt</label>
-			<label><input type="radio" name="choice_acmeURL" value="https://acme.zerossl.com/v2/DV90/directory" desckey="descZeroSSL">ZeroSSL</label>
-			<label><input type="radio" name="choice_acmeURL" value="https://dv.acme-v02.api.pki.goog/directory" desckey="descGoogle">Google</label>
 			<label>
-				<input type="radio" name="choice_acmeURL" value="manual">
+				<input type="radio" name="choice_acmeURL" checked="checked" value="manual">
 				<span class="langEN">Fill in the URL manually</span>
 			</label>
-			<label>
-				<input type="radio" name="choice_acmeURL" value="https://acme-staging-v02.api.letsencrypt.org/directory">
-				<span class="langEN">For testing, don't choose</span>
-			</label>
-		</div>
-		
-		<div style="font-size:13px;color:#aaa">
-			<div class="pd descAcmeURL descLetsEncrypt" style="display:none">
-				<a href="https://letsencrypt.org/" target="_blank">Let's Encrypt</a>:
-				<span class="langEN">Please follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
-			</div>
-			<div class="pd descAcmeURL descZeroSSL" style="display:none">
-				<a href="https://zerossl.com/" target="_blank">ZeroSSL</a>:
-				<span style="color:#f80">
-					<span class="langEN">This URL may need to be operated according to the prompts below to eliminate the problem of cross-domain inaccessibility.</span>
-				</span>
-				<span class="langEN">Before applying for a certificate, you need to follow ZeroSSL's <a href="https://zerossl.com/documentation/acme/" target="_blank">official documents</a>, register a ZeroSSL account and generate an EAB credential, and use this EAB credential every time you apply for a certificate, follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
-			</div>
-			<div class="pd descAcmeURL descGoogle" style="display:none">
-				<a href="https://pki.goog/" target="_blank">Google Trust Services</a>:
-				<span style="color:#f80">
-					<span class="langEN">This URL may need to be operated according to the prompts below to eliminate the problem of cross-domain inaccessibility.</span>
-				</span>
-				<span class="langEN">Before applying for a certificate, you need to follow Google's <a href="https://cloud.google.com/certificate-manager/docs/public-ca-tutorial" target="_blank">official documents</a>, generate an EAB credential in Google Cloud, and use this EAB credential every time you apply for a certificate, follow the operation steps prompts below to apply, and you can get the certificate, which is valid for 90 days.</span>
-				<span style="color:#f80">
-					<span class="langEN">Note: Because the same Google EAB credential can only be bound to one ACME account (Private key), when you apply for a certificate for the first time, <span style="font-weight:bold;font-size:20px">you must also save the newly generated or manually filled ACME account private key in the second step</span>, this EAB credential must be used together with the saved ACME account private key when applying for a certificate next time.</span>
-				</span>
-			</div>
 		</div>
 		
 		<div class="pd FlexBox">
