@@ -33,12 +33,13 @@ async function getVAChallenge() {
   challenge = JSON.parse(xmlhttp.responseText).challenge;
   console.log('challenge: ' + challenge);
   var options = {
-      'scope': 'USER',
       'challenge': decodestr2ab(challenge),
-      'registerKey': {
-        //'algorithm': 'ECDSA',
-	'token': 'system',
-      },
+      //'registerKey': {
+      //  'algorithm': 'ECDSA',
+      //},
+      'scope': 'USER',
+      
+      
     }
   console.log('options:');
   console.log(options);
