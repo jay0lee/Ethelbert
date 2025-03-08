@@ -1,4 +1,4 @@
-# Ethelbert - Experimental ChromeOS Extenion implementing the ACME protocol 
+# Ethelbert - Experimental ChromeOS extension implementing the ACME protocol 
 
 "Ethelbert" is the middle name of Wile E. Coyote who loved using ACME products but wasn't very good at it.
 
