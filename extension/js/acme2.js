@@ -14,25 +14,13 @@ window.ACME={
 	,Directory:function(True, False) {
 		var id =++ ACME.SyncID;
 		//var url = ACME.URL, dirStoreKey = "ACME_HTML_cache_" + url;
-		var ok = function(cache) {
-			var data = cache.data;
+		var ok = function() {
 			if (id != ACME.SyncID) return False("cancel");
 			var meta = data.meta || {};
 			if (!data.newOrder)
 				return False("Not newOrder found: " + FormatText(JSON.stringify(data)));
 			ACME.DirData = data;
-			ACME.StepData.termsURL = meta.termsOfService;
-			ACME.StepData.needEAB = !!meta.externalAccountRequired;
-			var saveCache = function() {
-				localStorage[dirStoreKey] = JSON.stringify(cache);
-			};
-			saveCache();
-			True(cache,saveCache);
 		};
-		var cache = JSON.parse(localStorage[dirStoreKey] || '{}');
-		if (cache.time && Date.now() - cache.time < 24*60*60*1000) {
-			return ok(cache);
-		}
 		console.log("true: " + True);
 		console.log("false: " + False);
 		console.log(typeof False);
