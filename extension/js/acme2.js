@@ -36,7 +36,7 @@ window.ACME={
 		console.log("true: " + True);
 		console.log("false: " + False);
 		console.log(typeof False);
-		console.log("URL: + url);
+		console.log("URL: " + url);
 		request(url, null, function(data) {
 			ok({data:data, time:Date.now()});
 		},False);
