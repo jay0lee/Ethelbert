@@ -32,6 +32,9 @@ var AccountKeyGenerate = function(){
 };
 AccountKeyGenerate();
 
+var url;
+url = "https://ca.lan/acme/acme-da/directory"
+
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
  * @param {string} str string instance
@@ -133,15 +136,6 @@ var choiceAcmeURLChangeAfter=function(){
 window.acmeReadDirClick = function() {
 	var id=++UserClickSyncID;
 	
-	var url = $(".in_acmeURL").val().trim();
-	if(!url){
-		ShowState(sEl,"Please fill in the service URL!",1);
-		return;
-	}
-	localStorage[ChoiceAcmeURLStoreKey]=url;
-	url = ACME.URL = url.replace(/\/$/,"");
-	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+"Reading service directory, " + " URL="+ACME.URL, 2));
 	var reqDir=function(){
 		ACME.Directory(function(cache,saveCache){
 			saveCacheCors=function(corsOK,err){
