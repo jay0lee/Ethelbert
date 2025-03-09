@@ -16,7 +16,7 @@ chrome.enterprise.deviceAttributes.getDeviceSerialNumber(function(sn) {
 });
 
 var email;
-chrome.identity.getProfileUserInfo(id, function(id) {
+chrome.identity.getProfileUserInfo(function(id) {
 	email = id.email;
 });
 
