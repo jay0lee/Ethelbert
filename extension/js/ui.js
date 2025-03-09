@@ -130,22 +130,18 @@ var choiceAcmeURLChangeAfter=function(){
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
 //点击读取服务目录按钮
-window.acmeReadDirClick=function(){
+window.acmeReadDirClick = function() {
 	var id=++UserClickSyncID;
 	
-	$(".step1Hide").hide();
-	$(".step1Show").show();
-	var tag="Step-1",sEl=".acmeReadDirState";
-	
-	var url=$(".in_acmeURL").val().trim();
+	var url = $(".in_acmeURL").val().trim();
 	if(!url){
-		ShowState(sEl,Lang("请填写服务URL！","Please fill in the service URL!"),1);
+		ShowState(sEl,"Please fill in the service URL!",1);
 		return;
 	}
 	localStorage[ChoiceAcmeURLStoreKey]=url;
-	url=ACME.URL=url.replace(/\/$/,"");
+	url = ACME.URL = url.replace(/\/$/,"");
 	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在读取服务目录，","Reading service directory, ")+" URL="+ACME.URL, 2));
+	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+"Reading service directory, " + " URL="+ACME.URL, 2));
 	var reqDir=function(){
 		ACME.Directory(function(cache,saveCache){
 			saveCacheCors=function(corsOK,err){
@@ -339,6 +335,7 @@ window.verifyRunStopClick=function(){
 };
 var verifyRunStopFn;
 window.verifyStepClick=function(){
+	window.acmeReadDirClick();
 	window.configStepClick();
 	var id=++UserClickSyncID;
 	var tag="Step-3",sEl=".verifyStepState";
