@@ -447,7 +447,8 @@ var request = function(url, post, True, False) {
 				} catch(e) { };
 			}
 			if (set.nocheck || !isBad && (!useResp || data)) {
-				console.log("data in request(): " + data);
+				console.log("data in request(): ");
+				console.log(data);
 				return True(data, xhr);
 			}
 			False((isBad?"["+xhr.status+"]":"")+FormatText(xhr.responseText), xhr.status);
