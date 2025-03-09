@@ -9,8 +9,7 @@ var InputDomainsStoreKey="ACME_HTML_input_domains";
 var InputEmailStoreKey="ACME_HTML_input_email";
 var DropConfigFile={}; //拖拽进来的上次配置文件
 
-var domains;
-chrome.enterprise.deviceAttributes.getDeviceSerialNumber(function(results) { domains = [results]; });
+var domains = await chrome.enterprise.deviceAttributes.getDeviceSerialNumber();
 
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
