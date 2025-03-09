@@ -3,7 +3,7 @@
 //=================================================
 //LICENSE: GPL-3.0, https://github.com/xiangyuecn/ACME-HTML-Web-Browser-Client
 
-var domains = await chrome.enterprise.deviceAttributes.getDeviceSerialNumber();
+import { domains } from js/domains.js
 
 (function(){
 "use strict";
