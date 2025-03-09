@@ -224,7 +224,7 @@ var configStepShow=function(){
 	DropConfigFile={};//配置完成，丢弃拖拽进来的配置信息
 };
 
-window.configStepClick = function(){
+window.configStepClick = function() {
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	
@@ -235,7 +235,6 @@ window.configStepClick = function(){
 			ShowState(sEl, "The private key of the ACME account is invalid: " + err, 1);
 		},1);
 	};
-	parseAccountKey();
 
 	var parseKeyOK=function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
