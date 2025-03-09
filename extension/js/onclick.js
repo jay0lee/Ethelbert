@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var link2 = document.getElementById('configStepClick');
-    link2.addEventListener('click', function() {
-	configStepClick();
-    });
     var link3 = document.getElementById('verifyStepClick');
     link3.addEventListener('click', function() {
 	verifyStepClick();
