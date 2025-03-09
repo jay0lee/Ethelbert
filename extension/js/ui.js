@@ -236,6 +236,8 @@ window.configStepClick = function() {
 		},1);
 	};
 
+	parseAccountKey();
+
 	var parseKeyOK=function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
 		
@@ -681,5 +683,4 @@ window.addEventListener("load", (event) => {
   console.log("page is fully loaded");
   window.acmeReadDirClick();
   window.configStepClick();
-  ACME.
 });
