@@ -5,8 +5,8 @@
 (function(){
 "use strict";
 
-True = function() {};
-False = function() {};
+var True = function() {};
+var False = function() {};
 
 /************** ACME client implementation **************/
 //RFC8555: https://www.rfc-editor.org/rfc/rfc8555.html
