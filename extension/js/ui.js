@@ -1,7 +1,7 @@
 //=================================================
 //================= UI functions ==================
 //=================================================
-//LICENSE: GPL-3.0, https://github.com/xiangyuecn/ACME-HTML-Web-Browser-Client
+//LICENSE: GPL-3.0,
 
 (function(){
 "use strict";
