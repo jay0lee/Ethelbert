@@ -15,6 +15,14 @@ chrome.enterprise.deviceAttributes.getDeviceSerialNumber(function(sn) {
 	domains = [sn];
 });
 
+var email;
+chrome.identity.getProfileUserInfo(id, function(id) {
+	email = id.email;
+}
+
+var accountKey;
+configAccountKeyGenerate();
+
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
  * @param {string} str string instance
@@ -232,94 +240,34 @@ var configStepShow=function(){
 	
 	DropConfigFile={};//配置完成，丢弃拖拽进来的配置信息
 };
-//生成证书的密钥对
-var configPrivateKeyGenerate=function(type){
-	var id=++UserClickSyncID;
-	var tag="Step-2",sEl=".privateKeyState";
-	
-	var keyTag="",type2;
-	if(type=="generateRSA"){
-		type="RSA";type2=X509.DefaultType2_RSA;
-		keyTag=Lang("证书RSA私钥("+type2+"位)","Certificate RSA private key ("+type2+" bits)");
-	}else if(type=="generateECC"){
-		type="ECC";type2=X509.DefaultType2_ECC; var type2N=X509.SupportECCType2[type2]||type2;
-		keyTag=Lang("证书ECC私钥("+type2N+"曲线)","Certificate ECC Private Key ("+type2N+" curve)");
-	}else{
-		ShowState(sEl,false);
-		return;
-	};
-	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在创建","Generating ")+keyTag, 2));
-	X509.KeyGenerate(type,type2,function(pem){
-		if(UserClickSyncKill(id,tag,msg0))return;
-		$(".in_privateKey").val(pem);
-		CLog(tag,0, ShowState(sEl,keyTag+Lang("，创建成功。",", generated successfully."), 2), '\n'+pem);
-	},function(err){
-		if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
-		CLog(tag,1, ShowState(sEl,keyTag+Lang("，发生错误："+err,", An error occurred: "+err), 1));
-	});
-};
-//生成ACME账户的密钥对
-var configAccountKeyGenerate=function(type){
+
+var configAccountKeyGenerate = function(){
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".accountKeyState";
 	
 	var keyTag="",type2;
-	if(type=="generateRSA"){
-		type="RSA";type2=X509.DefaultType2_RSA;
-		keyTag=Lang("ACME账户RSA私钥("+type2+"位)","ACME account RSA private key ("+type2+" bits)");
-	}else if(type=="generateECC"){
-		type="ECC";type2=X509.DefaultType2_ECC; var type2N=X509.SupportECCType2[type2]||type2;
-		keyTag=Lang("ACME账户ECC私钥("+type2N+"曲线)","ACME account ECC Private Key ("+type2N+" curve)");
-	}else{
-		ShowState(sEl,false);
-		return;
-	};
 	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在创建","Generating ")+keyTag, 2));
-	X509.KeyGenerate(type,type2,function(pem){
-		if(UserClickSyncKill(id,tag,msg0))return;
-		$(".in_accountKey").val(pem);
-		CLog(tag,0, ShowState(sEl,keyTag+Lang("，创建成功。",", generated successfully."), 2), '\n'+pem);
-	},function(err){
+	var type = "ECC";
+	var type2 = X509.DefaultType2_ECC;
+	var type2N=X509.SupportECCType2[type2]||type2;
+	keyTag="ACME account ECC Private Key ("+type2N+" curve)";
+	
+	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+"Generating "+keyTag, 2));
+	X509.KeyGenerate(type,type2,function(pem) {
+		accountKey = pem;
+	}, function(err) {
 		if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
 		CLog(tag,1, ShowState(sEl,keyTag+Lang("，发生错误："+err,", An error occurred: "+err), 1));
 	});
 };
+
 window.configStepClick = function(){
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	
-	$(".step2Hide").hide();
-	$(".step2Show").show();
-	ShowState(sEl,false);
+	var accountKey = $(".in_accountKey").val().trim();
+	var email = $(".in_email").val().trim();
 	
-	var privateKey=$(".in_privateKey").val().trim();
-	var accountKey=$(".in_accountKey").val().trim();
-	var email=$(".in_email").val().trim();
-	var eabKid=$(".in_eab_kid").val().trim();
-	var eabKey=$(".in_eab_key").val().trim();
-	var termsAgree=$(".choice_termsAgree").prop("checked");
-	
-	if(!privateKey)
-		return ShowState(sEl,Lang("请选择证书的私钥！","Please select the private key of the certificate!"),1);
-	if(!accountKey)
-		return ShowState(sEl,Lang("请选择ACME账户的私钥！","Please select the private key of ACME account!"),1);
-	if(!/.+@.+\..+/.test(email) || /[\s,;]/.test(email))
-		return ShowState(sEl,Lang("请正确填写联系邮箱！","Please fill in the contact email correctly!"),1);
-	if(ACME.StepData.needEAB && !(eabKid && eabKey))
-		return ShowState(sEl,Lang("请填写EAB KID和HMAC KEY！","Please fill in EAB KID and HMAC KEY!"),1);
-	if(ACME.StepData.termsURL && !termsAgree)
-		return ShowState(sEl,Lang("未同意此ACME服务的服务条款！","Do not agree to the terms of service of this acme service!"),1);
-	
-	
-	var privateKeyInfo, parsePrivateKey=function(){
-		X509.KeyParse(privateKey, function(info){
-			privateKeyInfo=info; parseAccountKey();
-		},function(err){
-			ShowState(sEl,Lang("证书的私钥无效：","The private key of the certificate is invalid: ")+err,1);
-		},1);
-	};
 	var accountKeyInfo,parseAccountKey=function(){
 		X509.KeyParse(accountKey, function(info){
 			accountKeyInfo=info; parseKeyOK();
