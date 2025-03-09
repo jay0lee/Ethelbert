@@ -3,8 +3,6 @@
 //=================================================
 //LICENSE: GPL-3.0, https://github.com/xiangyuecn/ACME-HTML-Web-Browser-Client
 
-import { domains } from js/domains.js
-
 (function(){
 "use strict";
 var ChoiceAcmeURLStoreKey="ACME_HTML_choice_acmeURL";
