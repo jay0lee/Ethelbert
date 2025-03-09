@@ -428,29 +428,27 @@ var requestA=function(url,post){
 		});
 	});
 }
-var request=function(url,post,True,False){
-	var set=typeof(url)=="string"?{url:url}:url; url=set.url;
-	var method=set.method||(post?"POST":"GET");
-	var tag="ACME.Request";
-	
-	var xhr=new XMLHttpRequest();
+var request = function(url, post, True, False) {
+	var set = typeof(url) == "string"?{url:url}:url; url=set.url;
+	var method = set.method||(post?"POST":"GET");
+	console.log(method + " request to " + url);
+	var xhr = new XMLHttpRequest();
 	xhr.timeout=30000;
-	xhr.open(method,url,true);
-	xhr.onreadystatechange=function(){
-		if(xhr.readyState==4){
-			ACME.PrevNonce=xhr.getResponseHeader("Replay-Nonce")||"";//将此值存起来
-			
-			var isBad=xhr.status<200 || xhr.status>=300;
-			var useResp=set.response==null || set.response;
-			var err="",data,logObj;
-			if(useResp || isBad){
-				logObj=xhr.responseText;
-				try{
+	xhr.open(method, url, true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState==4) {
+			ACME.PrevNonce = xhr.getResponseHeader("Replay-Nonce")||"";
+			var isBad = xhr.status<200 || xhr.status>=300;
+			var useResp = set.response==null || set.response;
+			var err = "",data,logObj;
+			if (useResp || isBad) {
+				logObj = xhr.responseText;
+				try {
 					data=JSON.parse(logObj);
 					logObj=data;
-				}catch(e){ };
+				} catch(e) { };
 			}
-			if(set.nocheck || !isBad && (!useResp || data)){
+			if (set.nocheck || !isBad && (!useResp || data)) {
 				return True(data, xhr);
 			}
 			False((isBad?"["+xhr.status+"]":"")+FormatText(xhr.responseText), xhr.status);
