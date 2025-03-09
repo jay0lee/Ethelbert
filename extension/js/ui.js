@@ -250,7 +250,6 @@ window.configStepClick = function(){
 		},1);
 	};
 	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips(), 2));
 	var parseKeyOK=function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
 		
@@ -262,7 +261,6 @@ window.configStepClick = function(){
 			,eabKid:eabKid
 			,eabKey:eabKey
 		};
-		CLog(tag, 0, "config", ACME.StepData.config);
 		acmeNewAccount();
 	};
 	//ACME
