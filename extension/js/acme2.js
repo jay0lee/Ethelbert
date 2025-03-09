@@ -14,6 +14,8 @@ window.ACME={
 	,Directory:function(url, True, False) {
 		var id =++ ACME.SyncID;
 		var ok = function(data) {
+			console.log("data in Directory(): ");
+			console.log(data);
 			if (id != ACME.SyncID) return False("cancel");
 			var meta = data.meta || {};
 			if (!data.newOrder)
