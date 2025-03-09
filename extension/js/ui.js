@@ -146,7 +146,6 @@ window.acmeReadDirClick = function() {
 			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);//不正常已缓存
 			else testCORS();//检测是否能正常调用接口，是否支持跨域
 		},function(err,status){
-			if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
 			if(status===0){ //可能是跨域无法读取到任何数据
 				CLog(tag,1, ShowState(sEl,Lang("读取服务目录出错：无法访问此URL。","Read service directory error: This URL cannot be accessed.")+TryAgainTips(), 1));
 				
