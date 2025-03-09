@@ -33,7 +33,10 @@ window.ACME={
 		if (cache.time && Date.now() - cache.time < 24*60*60*1000) {
 			return ok(cache);
 		}
-		console.log(2)
+		console.log("true: " + True);
+		console.log("false: " + False);
+		console.log(typeof False);
+		console.log("URL: + url);
 		request(url, null, function(data) {
 			ok({data:data, time:Date.now()});
 		},False);
