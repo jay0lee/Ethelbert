@@ -21,7 +21,17 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 var accountKey;
-configAccountKeyGenerate();
+var AccountKeyGenerate = function(){
+	var type = "ECC";
+	var type2 = X509.DefaultType2_ECC;
+	var type2N=X509.SupportECCType2[type2]||type2;
+	keyTag="ACME account ECC Private Key ("+type2N+" curve)";
+	
+	X509.KeyGenerate(type,type2,function(pem) {
+		accountKey = pem;
+	});
+};
+AccountKeyGenerate();
 
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
@@ -200,7 +210,6 @@ window.acmeReadDirClick=function(){
 
 
 /************** UI Step2: Certificate Configuration **************/
-//显示第二步界面
 var configStepShow=function(){
 	$(".step2Hide").hide();
 	$(".step2Show").show();
@@ -239,26 +248,6 @@ var configStepShow=function(){
 	setKey("privateKey");setKey("accountKey");
 	
 	DropConfigFile={};//配置完成，丢弃拖拽进来的配置信息
-};
-
-var configAccountKeyGenerate = function(){
-	var id=++UserClickSyncID;
-	var tag="Step-2",sEl=".accountKeyState";
-	
-	var keyTag="",type2;
-	
-	var type = "ECC";
-	var type2 = X509.DefaultType2_ECC;
-	var type2N=X509.SupportECCType2[type2]||type2;
-	keyTag="ACME account ECC Private Key ("+type2N+" curve)";
-	
-	var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+"Generating "+keyTag, 2));
-	X509.KeyGenerate(type,type2,function(pem) {
-		accountKey = pem;
-	}, function(err) {
-		if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
-		CLog(tag,1, ShowState(sEl,keyTag+Lang("，发生错误："+err,", An error occurred: "+err), 1));
-	});
 };
 
 window.configStepClick = function(){
