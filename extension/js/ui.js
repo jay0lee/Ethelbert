@@ -136,7 +136,7 @@ window.acmeReadDirClick = function() {
 	var id=++UserClickSyncID;
 	
 	var reqDir = function() {
-		ACME.Directory(function(cache,saveCache){
+		ACME.Directory(url, function(cache,saveCache){
 			saveCacheCors=function(corsOK,err){
 				cache.corsOK=corsOK?1:-1;
 				cache.corsError=err||"";
