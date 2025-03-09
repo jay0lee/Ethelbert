@@ -23,8 +23,4 @@ document.addEventListener('DOMContentLoaded', function() {
     link8.addEventListener('click', function() {
         downloadBtnClick('Log');
     });
-    var link1 = document.getElementById('link1');
-    link1.addEventListener('click', function() {
-        acmeReadDirClick();
-    });
 });
