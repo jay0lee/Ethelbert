@@ -450,10 +450,6 @@ var request=function(url,post,True,False){
 					logObj=data;
 				}catch(e){ };
 			}
-			CLog(tag,4,"send End",set, {
-				status:xhr.status
-				,headers:xhr.getAllResponseHeaders()
-			}, logObj);
 			if(set.nocheck || !isBad && (!useResp || data)){
 				return True(data, xhr);
 			}
