@@ -33,6 +33,7 @@ window.ACME={
 		if (cache.time && Date.now() - cache.time < 24*60*60*1000) {
 			return ok(cache);
 		}
+		console.log(2)
 		request(url, null, function(data) {
 			ok({data:data, time:Date.now()});
 		},False);
@@ -82,6 +83,7 @@ window.ACME={
 	,GetNonce:function(useNew, True, False){
 		var old=ACME.PrevNonce;ACME.PrevNonce="";
 		if(!useNew && old) return True(old);//使用上次调用返回的值
+		console.log(3)
 		request({url:ACME.DirData.newNonce
 			,method:"HEAD",response:false
 		}, null, function(data,xhr){
@@ -99,6 +101,7 @@ window.ACME={
 	}
 	//测试账户接口的跨域访问
 	,TestAccountCORS:function(True,False){
+		console.log(4)
 		request({url:ACME.DirData.newAccount
 			,method:"POST",response:false,nocheck:true
 		}, {}, function(data,xhr){
@@ -155,6 +158,7 @@ window.ACME={
 			,nonce: await ACME.GetNonceA(true)
 			,url: url
 		},accountData);
+		console.log(5)
 		var resp=await requestA(url, sendData);
 		if(id!=ACME.SyncID) throw new Error("cancel");
 		ACME.StepData.account={
@@ -193,6 +197,7 @@ window.ACME={
 			,nonce: await ACME.GetNonceA()
 			,url: url
 		},orderData);
+		console.log(6)
 		var resp=await requestA(url, sendData);
 		if(id!=ACME.SyncID) throw new Error("cancel");
 		resp.data.orderUrl=xhrHeader(resp.xhr, "Location");
@@ -242,6 +247,7 @@ window.ACME={
 				,nonce: await ACME.GetNonceA()
 				,url: url
 			},"");
+			console.log(7)
 			var resp=await requestA(url, sendData);
 			if(id!=ACME.SyncID) throw new Error("cancel");
 			resp.data.domain=idfs[i].value;
@@ -283,6 +289,7 @@ window.ACME={
 				,nonce: await ACME.GetNonceA()
 				,url: url
 			},{attObj: window.challenge_response});
+			console.log(8)
 			var resp=await requestA({url:url,nocheck:true}, sendData);
 			var status=resp.xhr.status;
 			if(status>=200&&status<300)
@@ -295,6 +302,7 @@ window.ACME={
 			,nonce: await ACME.GetNonceA()
 			,url: url
 		},"");
+		console.log(9)
 		var resp = await requestA(url, sendData);
 		var data=resp.data;
 		if (data.status == "pending") {
@@ -348,6 +356,7 @@ window.ACME={
 				,nonce: await ACME.GetNonceA()
 				,url: url
 			},{ csr:csr });
+			console.log(10);
 			var resp = await requestA(url, sendData);
 			if(id!=ACME.SyncID) throw new Error("cancel");
 			CLog(tag,0,"finalize result",resp.data);
@@ -366,6 +375,7 @@ window.ACME={
 				,nonce: await ACME.GetNonceA()
 				,url: url
 			},"");
+			console.log(11);
 			var resp=await requestA(url, sendData);
 			if(id!=ACME.SyncID) throw new Error("cancel");
 			var data=resp.data;
@@ -393,6 +403,7 @@ window.ACME={
 				,nonce: await ACME.GetNonceA()
 				,url: url
 			},"");
+			console.log(12);
 			var resp=await requestA({url:url,response:false}, sendData);
 			if(id!=ACME.SyncID) throw new Error("cancel");
 			var pem=resp.xhr.responseText;
@@ -421,6 +432,7 @@ var requestA=function(url,post){
 		console.log(url);
 		console.log('POST:');
 		console.log(post);
+		console.log(1)
 		request(url,post,function(data,xhr){
 			resolve({data:data,xhr:xhr});
 		},function(err){
