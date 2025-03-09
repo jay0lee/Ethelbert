@@ -135,7 +135,7 @@ var choiceAcmeURLChangeAfter=function(){
 window.acmeReadDirClick = function() {
 	var id=++UserClickSyncID;
 	
-	var reqDir=function(){
+	var reqDir = function() {
 		ACME.Directory(function(cache,saveCache){
 			saveCacheCors=function(corsOK,err){
 				cache.corsOK=corsOK?1:-1;
@@ -145,14 +145,6 @@ window.acmeReadDirClick = function() {
 			if(cache.corsOK==1) dirOK();//已缓存的，此ACME服务正常
 			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);//不正常已缓存
 			else testCORS();//检测是否能正常调用接口，是否支持跨域
-		},function(err,status){
-			if(status===0){ //可能是跨域无法读取到任何数据
-				CLog(tag,1, ShowState(sEl,Lang("读取服务目录出错：无法访问此URL。","Read service directory error: This URL cannot be accessed.")+TryAgainTips(), 1));
-				
-				acmeReadDirGotoCORS(Lang("如果你可以在浏览器中直接打开并访问此ACME服务URL，代表此ACME服务对跨域访问支持不良，则请按下面步骤操作：","If you can open and access this ACME service URL directly in your browser, it represents that this ACME service has poor support for cross-domain access, please follow the steps below:"));
-			}else{
-				CLog(tag,1, ShowState(sEl,Lang("读取服务目录出错："+err,"Read service directory error: "+err)+TryAgainTips(), 1));
-			};
 		});
 	};
 	var saveCacheCors;
