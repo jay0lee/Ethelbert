@@ -11,7 +11,7 @@ window.ACME={
 	URL: ""
 	,SyncID: 0
 	,DirData: {}
-	,Directory:function(True, False) {
+	,Directory:function(url, True, False) {
 		var id =++ ACME.SyncID;
 		//var url = ACME.URL, dirStoreKey = "ACME_HTML_cache_" + url;
 		var ok = function() {
