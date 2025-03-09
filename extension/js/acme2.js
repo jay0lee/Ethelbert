@@ -13,11 +13,11 @@ window.ACME={
 	,DirData: {}
 	,Directory:function(url, True, False) {
 		var id =++ ACME.SyncID;
-		var ok = function() {
+		var ok = function(data) {
 			if (id != ACME.SyncID) return False("cancel");
 			var meta = data.meta || {};
 			if (!data.newOrder)
-				return False("Not newOrder found: " + FormatText(JSON.stringify(data)));
+				return False("No newOrder found in directory: " + FormatText(JSON.stringify(data)));
 			ACME.DirData = data;
 		};
 		request(url, null, function(data) {
