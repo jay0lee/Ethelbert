@@ -182,11 +182,6 @@ window.acmeReadDirClick = function() {
 	
 	reqDir();
 };
-window.acmeReadDirClick();
-
-
-
-
 
 /************** UI Step2: Certificate Configuration **************/
 var configStepShow=function(){
@@ -289,10 +284,8 @@ window.configStepClick = function(){
 			+NextStepTips(), 2), ACME.StepData);
 	};
 };
-window.configStepClick();
 
 /************** UI Step3: Verify Domain Ownership **************/
-//显示第三步界面
 var verifyStepShow=function(){
 	$(".step3Hide").hide();
 	$(".step3Show").show();
@@ -483,14 +476,7 @@ window.verifyStepClick=function(){
 	run();
 };
 
-
-
-
-
-
-
 /************** UI Step4: Download and save the certificate PEM file **************/
-//显示第四步界面
 var downloadStepShow=function(){
 	$(".step4Hide").hide();
 	$(".step4Show").show();
@@ -690,3 +676,9 @@ window.Test_Restore_StepDownload=function(){
 
 
 })();
+
+window.addEventListener("load", (event) => {
+  console.log("page is fully loaded");
+  window.acmeReadDirClick();
+  window.configStepClick();
+});
