@@ -2,14 +2,15 @@
 //================= UI functions ==================
 //=================================================
 //LICENSE: GPL-3.0, https://github.com/xiangyuecn/ACME-HTML-Web-Browser-Client
+
+var domains = await chrome.enterprise.deviceAttributes.getDeviceSerialNumber();
+
 (function(){
 "use strict";
 var ChoiceAcmeURLStoreKey="ACME_HTML_choice_acmeURL";
 var InputDomainsStoreKey="ACME_HTML_input_domains";
 var InputEmailStoreKey="ACME_HTML_input_email";
 var DropConfigFile={}; //拖拽进来的上次配置文件
-
-var domains = await chrome.enterprise.deviceAttributes.getDeviceSerialNumber();
 
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
