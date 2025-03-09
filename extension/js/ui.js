@@ -10,6 +10,11 @@ var InputDomainsStoreKey="ACME_HTML_input_domains";
 var InputEmailStoreKey="ACME_HTML_input_email";
 var DropConfigFile={}; //拖拽进来的上次配置文件
 
+var domains;
+chrome.enterprise.deviceAttributes.getDeviceSerialNumber(function(sn) {
+	domains = [sn];
+});
+
 /**
  * decodestr2ab convert a base64 encoded string to ArrayBuffer
  * @param {string} str string instance
@@ -415,7 +420,7 @@ window.verifyStepClick=function(){
 	$(".finalizeOrderBtn").hide();
 	ShowState(sEl,false);
 	
-	var domains=ACME.StepData.config.domains,auths=ACME.StepData.auths;
+	var auths = ACME.StepData.auths;
 	var updateState = function(init,stopNow,isFail) {
 		var isStop = stopNow || id != UserClickSyncID;
 		var okCount = 0, errCount = 0, execCount = 0;
