@@ -13,7 +13,6 @@ window.ACME={
 	,DirData: {}
 	,Directory:function(url, True, False) {
 		var id =++ ACME.SyncID;
-		//var url = ACME.URL, dirStoreKey = "ACME_HTML_cache_" + url;
 		var ok = function() {
 			if (id != ACME.SyncID) return False("cancel");
 			var meta = data.meta || {};
@@ -435,16 +434,16 @@ var request = function(url, post, True, False) {
 	xhr.timeout=30000;
 	xhr.open(method, url, true);
 	xhr.onreadystatechange = function() {
-		if (xhr.readyState==4) {
-			ACME.PrevNonce = xhr.getResponseHeader("Replay-Nonce")||"";
-			var isBad = xhr.status<200 || xhr.status>=300;
-			var useResp = set.response==null || set.response;
-			var err = "",data,logObj;
+		if (xhr.readyState == 4) {
+			ACME.PrevNonce = xhr.getResponseHeader("Replay-Nonce") || "";
+			var isBad = xhr.status<200 || xhr.status >= 300;
+			var useResp = set.response == null || set.response;
+			var err = "", data, logObj;
 			if (useResp || isBad) {
 				logObj = xhr.responseText;
 				try {
-					data=JSON.parse(logObj);
-					logObj=data;
+					data = JSON.parse(logObj);
+					logObj = data;
 				} catch(e) { };
 			}
 			if (set.nocheck || !isBad && (!useResp || data)) {
@@ -453,11 +452,11 @@ var request = function(url, post, True, False) {
 			False((isBad?"["+xhr.status+"]":"")+FormatText(xhr.responseText), xhr.status);
 		}
 	};
-	if(post){
-		if(typeof(post)=="object")post=JSON.stringify(post);
-		xhr.setRequestHeader("Content-Type",set.contentType||"application/jose+json");
+	if (post) {
+		if (typeof(post) == "object") post=JSON.stringify(post);
+		xhr.setRequestHeader("Content-Type", set.contentType || "application/jose+json");
 		xhr.send(post);
-	}else{
+	} else {
 		xhr.send();
 	}
 };
