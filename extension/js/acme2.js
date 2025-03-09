@@ -23,7 +23,7 @@ window.ACME={
 			ACME.DirData = data;
 		};
 		request(url, null, function(data) {
-			ok({data:data, time:Date.now()});
+			ok(data);
 		},False);
 	}
 	
