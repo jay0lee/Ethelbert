@@ -25,7 +25,6 @@ var AccountKeyGenerate = function(){
 	var type = "ECC";
 	var type2 = X509.DefaultType2_ECC;
 	var type2N=X509.SupportECCType2[type2]||type2;
-	keyTag="ACME account ECC Private Key ("+type2N+" curve)";
 	
 	X509.KeyGenerate(type,type2,function(pem) {
 		accountKey = pem;
