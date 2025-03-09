@@ -253,14 +253,11 @@ window.configStepClick = function(){
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	
-	var accountKey = $(".in_accountKey").val().trim();
-	var email = $(".in_email").val().trim();
-	
-	var accountKeyInfo,parseAccountKey=function(){
+	var accountKeyInfo, parseAccountKey = function() {
 		X509.KeyParse(accountKey, function(info){
 			accountKeyInfo=info; parseKeyOK();
 		},function(err){
-			ShowState(sEl,Lang("ACME账户的私钥无效：","The private key of the ACME account is invalid: ")+err,1);
+			ShowState(sEl, "The private key of the ACME account is invalid: " + err, 1);
 		},1);
 	};
 	
