@@ -132,7 +132,6 @@ var choiceAcmeURLChangeAfter=function(){
 	
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
-//点击读取服务目录按钮
 window.acmeReadDirClick = function() {
 	var id=++UserClickSyncID;
 	
@@ -192,7 +191,7 @@ window.acmeReadDirClick = function() {
 	
 	reqDir();
 };
-
+window.acmeReadDirClick();
 
 
 
@@ -301,11 +300,7 @@ window.configStepClick = function(){
 			+NextStepTips(), 2), ACME.StepData);
 	};
 };
-
-
-
-
-
+window.configStepClick();
 
 /************** UI Step3: Verify Domain Ownership **************/
 //显示第三步界面
@@ -329,8 +324,6 @@ window.verifyRunStopClick=function(){
 };
 var verifyRunStopFn;
 window.verifyStepClick=function(){
-	window.acmeReadDirClick();
-	window.configStepClick();
 	var id=++UserClickSyncID;
 	var tag="Step-3",sEl=".verifyStepState";
 	
