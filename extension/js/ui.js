@@ -286,7 +286,7 @@ var configAccountKeyGenerate=function(type){
 		CLog(tag,1, ShowState(sEl,keyTag+Lang("，发生错误："+err,", An error occurred: "+err), 1));
 	});
 };
-window.configStepClick=function(){
+window.configStepClick = function(){
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	
@@ -408,8 +408,8 @@ window.verifyRunStopClick=function(){
 	verifyRunStopFn&&verifyRunStopFn();
 };
 var verifyRunStopFn;
-//点击开始验证按钮，验证所有域名所有权
 window.verifyStepClick=function(){
+	window.configStepClick();
 	var id=++UserClickSyncID;
 	var tag="Step-3",sEl=".verifyStepState";
 	
