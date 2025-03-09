@@ -53,75 +53,18 @@ window.initMainUI=function(){
 	initTest_Restore();
 	acmeReadDirGotoCORSInit();
 	downloadFileNameShow();
-	initStep1();
-	initStep2();
 	initStep4();
 };
-var initStep1=function(){
-	$("input[name=choice_acmeURL]").bind("click",function(e){
-		var el=e.target;
-		var isManual=el.value=="manual";
-		$(".in_acmeURL").css("opacity",isManual?1:0.4)
-			.val(isManual?step1ChoiceStoreVal:el.value)
-			.attr("readonly",isManual?null:"");
-		
-		var descKey=$(el).attr("desckey");
-		$(".descAcmeURL").hide();
-		if(descKey)$("."+descKey).show();
-		
-		step1ChoiceStoreVal="";
-		choiceAcmeURLChangeAfter();
-	});
-	resetStep1();
-};
-var step1ChoiceStoreVal;
-var resetStep1=function(){
-	//选中上次选择的证书颁发机构
-	step1ChoiceStoreVal=DropConfigFile.acmeURL||window.Default_ACME_URL||localStorage[ChoiceAcmeURLStoreKey]||"";
-	var choices=$("input[name=choice_acmeURL]")
-	var idx=0;
-	if(step1ChoiceStoreVal){
-		var manualIdx=0;
-		for(var i=0;i<choices.length;i++){
-			if(choices[i].value==step1ChoiceStoreVal) idx=i+1;
-			if(choices[i].value=="manual") manualIdx=i+1;
-		}
-		if(!idx)idx=manualIdx //手动填写
-		idx--;
-	}
-	choices[idx].click();
-};
-var initStep2=function(){
-	//证书私钥UI
-	$(".privateKeyBox").hide();
-	$("input[name=choice_privateKey]").bind("click",function(e){
-		var el=e.target;
-		var isManual=el.value=="manual";
-		$(".in_privateKey").css("opacity",isManual?1:0.4)
-			.val("")
-			.attr("readonly",isManual?null:"");
-		$(".privateKeyBox").show();
-		
-		configPrivateKeyGenerate(el.value);//生成密钥
-		configStepShow();//重新显示界面
-	});
-	
-};
 
-
-//下一步操作提示
 var NextStepTips=function(){
 	return '<span style="font-size:24px;font-weight:bold;">'+Lang("请进行下一步操作。"," Please proceed to the next step.")+'</span>';
 };
-//请稍候提示
 var PleaseWaitTips=function(){
 	return Lang(" 请稍候... "," Please wait... ");
 };
-//请重试提示
 var TryAgainTips=function(){
 	return Lang(" 请重试！"," Please try again! ");
 };
-//每一步的状态更新显示
 var ShowState=function(elem,msg,color,tag){
 	var now=new Date();
 	var t=("0"+now.getHours()).substr(-2)
@@ -142,9 +85,6 @@ window.onerror=function(message, url, lineNo, columnNo, error){
 	Toast('【Uncaught Error】'+message+'<pre>'+"at:"+lineNo+":"+columnNo+" url:"+url+"\n"+(error&&error.stack||"-")+'</pre>',1,15000);
 };
 
-
-
-//用户点击操作同步控制，新点击操作要终止之前未完成的操作
 var UserClickSyncID=0;
 var UserClickSyncKill=function(id,tag,msg){
 	if(id!=UserClickSyncID){
