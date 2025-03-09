@@ -431,7 +431,7 @@ var requestA=function(url,post){
 var request=function(url,post,True,False){
 	var set=typeof(url)=="string"?{url:url}:url; url=set.url;
 	var method=set.method||(post?"POST":"GET");
-	var tag="ACME.Request"; CLog(tag,4,"send "+method,set,post);
+	var tag="ACME.Request";
 	
 	var xhr=new XMLHttpRequest();
 	xhr.timeout=30000;
