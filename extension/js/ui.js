@@ -302,7 +302,6 @@ window.configStepClick = function(){
 				+ACME.DirData.newOrder+Lang("，发生错误："+err,", An error occurred: "+err), 1));
 		});
 	};
-	//ACME接口调用完成，显示下一步
 	var acmeOK=function(){
 		verifyStepShow();
 		
@@ -311,8 +310,6 @@ window.configStepClick = function(){
 			,"Configuration is complete, ")
 			+NextStepTips(), 2), ACME.StepData);
 	};
-	
-	parsePrivateKey();
 };
 
 
