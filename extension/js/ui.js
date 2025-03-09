@@ -235,7 +235,8 @@ window.configStepClick = function(){
 			ShowState(sEl, "The private key of the ACME account is invalid: " + err, 1);
 		},1);
 	};
-	
+	parseAccountKey();
+
 	var parseKeyOK=function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
 		
@@ -681,4 +682,5 @@ window.addEventListener("load", (event) => {
   console.log("page is fully loaded");
   window.acmeReadDirClick();
   window.configStepClick();
+  ACME.
 });
