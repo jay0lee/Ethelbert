@@ -108,10 +108,9 @@ var choiceAcmeURLChangeAfter=function(){
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
 window.acmeReadDirClick = function(callback) {
-	console.log("callback is:");
-	console.log(callback);
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
+		console.log("Z");
 		ACME.Directory(url, function(cache,saveCache) {
 			console.log("A");
 			saveCacheCors = function(corsOK,err) {
@@ -120,7 +119,10 @@ window.acmeReadDirClick = function(callback) {
 				cache.corsError = err || "";
 				saveCache();
 			};
-			if (cache.corsOK==1) dirOK();
+			if (cache.corsOK==1) {
+				dirOK();
+				console.log("Y");
+				callback();
 			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);
 			else testCORS();
 		});
