@@ -229,6 +229,7 @@ window.configStepClick = function() {
 	var tag="Step-2",sEl=".configStepState";
 	
 	var accountKeyInfo, parseAccountKey = function() {
+		console.log('in parseAccountKey()')
 		X509.KeyParse(accountKey, function(info){
 			accountKeyInfo=info; parseKeyOK();
 		},function(err){
@@ -239,6 +240,7 @@ window.configStepClick = function() {
 	parseAccountKey();
 
 	var parseKeyOK=function() {
+		console.log('in parseKeyOK()')
 		if(UserClickSyncKill(id,tag,msg0))return;
 		
 		ACME.StepData.config={
@@ -252,7 +254,8 @@ window.configStepClick = function() {
 		acmeNewAccount();
 	};
 	//ACME
-	var acmeNewAccount=function(){
+	var acmeNewAccount=function() {
+		console.log('in acmeNewAccount()')
 		var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在调用ACME服务的newAccount接口：","The newAccount interface that is calling the ACME service: ")+ACME.DirData.newAccount, 2));
 		ACME.StepAccount(function(){
 			if(UserClickSyncKill(id,tag,msg0))return;
@@ -263,7 +266,8 @@ window.configStepClick = function() {
 				+ACME.DirData.newAccount+Lang("，发生错误："+err,", An error occurred: "+err), 1));
 		});
 	};
-	var acmeNewOrder=function(){
+	var acmeNewOrder=function() {
+		console.log('in acmeNewOrder()')
 		var msg0,onProgress=function(tips){
 			if(id!=UserClickSyncID)return;
 			msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在调用ACME服务的订单接口。","The order interface that is calling the ACME service.")+' '+tips+" URL:"+ACME.DirData.newOrder, 2));
@@ -278,6 +282,7 @@ window.configStepClick = function() {
 		});
 	};
 	var acmeOK=function(){
+		console.log('in acmeOK()')
 		verifyStepShow();
 		
 		CLog(tag,0, ShowState(sEl,Lang(
