@@ -634,6 +634,25 @@ function AccountKeyGenerate(callback) {
 	});
 };
 
+function hwKeyGenerate(callback) {
+  var keytype;
+  if (window.algorithm == 'rsa') {
+    keytype = 'RSA'
+  } else {
+    keytype = 'ECC'
+  }
+  var userormachine;
+  if (window.userormachinekey == 'user') {
+    location = 'user';
+  } else {
+    location = 'system';
+  }
+  X509.KeyGenerate(keytype, location, function(pem) {
+	  ACME.StepData.config.privateKey = pem;
+  });
+}
+hwKeyGenerate();
+
 window.addEventListener("load", (event) => {
   AccountKeyGenerate(function() {  
     window.acmeReadDirClick(function() {
