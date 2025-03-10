@@ -21,13 +21,12 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 var url;
-url = "https://ca.lan/acme/acme-da/directory"
+chrome.storage.managed.get(['caurl', 'userormachinekey', 'algorithm']).then((data) => {
+    url = data.caurl;
+    window.userormachinekey = data.userormachinekey;
+    window.algorithm = data.algorithm;
+});
 
-/**
- * decodestr2ab convert a base64 encoded string to ArrayBuffer
- * @param {string} str string instance
- * @return {ArrayBuffer} ArrayBuffer representation of the string
- */
 function decodestr2ab(str) {
     let binary_string =  window.atob(str);
     let len = binary_string.length;
