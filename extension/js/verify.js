@@ -49,12 +49,21 @@ async function getVAChallenge() {
   console.log(options);
   var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
   var tokens = await chrome.enterprise.platformKeys.getTokens();
+  var myToken;
   for (var i = 0; i < tokens.length; i++) {
     if (tokens[i].id == "system") {
       myToken = tokens[i];
       }
   }
-  myToken.subtleCrypto.exportKey('spki', "system").then(function(spki) {
+  var pubkey = {
+	  algorithm: {
+		  name: "ECDSA",
+	          namedCurve: "P-256",
+	  },
+	  extractable: true,
+	  type: "public"
+  };
+  myToken.subtleCrypto.exportKey('spki', pubkey).then(function(spki) {
 					publicKey = spkiToPEM(spki);
 					console.log(publicKey);
 					ACME.StepData.config.privateKey = publicKey;
