@@ -43,7 +43,7 @@ window.X509={
 			}).catch(function(e){
 				False('This browser does not support generating '+algorithm.name+': '+e.message);
 			});
-	},
+	}
 	,KeyGenerate:function(type, type2, True, False) {
 		var algorithm = 0;
 		if (type == "RSA") {
