@@ -72,12 +72,12 @@ window.ACME={
 		if(!useNew && old) return True(old);
 		console.log(3)
 		request({url: ACME.DirData.newNonce,
-			method:"HEAD",
-			 response:false},
+			method: "HEAD",
+			 response: false},
 		null, function(data,xhr) {
 			ACME.PrevNonce = "";
 			var val = xhr.getResponseHeader("Replay-Nonce");
-			if(!val) {
+			if (!val) {
 				False("GetNonce: "+'This ACME service has too poor browser access support to get the Replay-Nonce response header across domains.', true);
 				return;
 			}
@@ -120,10 +120,9 @@ window.ACME={
 		var url = ACME.DirData.newAccount
 		var config = ACME.StepData.config;
 		var accountData = {
-			contact: ["mailto:" + config.email]
-			,termsOfServiceAgreed:true
+			contact: ["mailto:" + config.email],
+			termsOfServiceAgreed: true,
 		};
-		
 		var sendData = await ACME.GetJwsA({
 			jwk: X509.PublicKeyJwk(config.accountKey),
 			nonce: await ACME.GetNonceA(true),
