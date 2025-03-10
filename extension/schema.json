@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "caurl": {
+      "title": "caurl",
+      "description": "URL of your ACME CA. Should end in /directory",
+      "type": "string"
+    },
+    "userormachinekey": {
+      "title": "userormachine",
+      "description": "Whether to create a user or machine-wide certificate. Should be user or machine. ",
+      "type": "string"
+    },
+    "algorithm": {
+      "title": "algorithm",
+      "description": "Algorithm to use. rsa or ecc.",
+      "type": "string"
+    }
+  }
+}
