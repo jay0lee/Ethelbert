@@ -123,8 +123,15 @@ window.acmeReadDirClick = function(callback) {
 				dirOK();
 				console.log("Y");
 				callback();
-			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);
-			else testCORS();
+			}
+			else if (cache.corsOK==-1) {
+				console.log("X");
+				testCORSFail(cache.corsError, true);
+			}
+			else {
+				console.log("Q");
+				testCORS();
+			}
 		});
 	};
 	var saveCacheCors;
