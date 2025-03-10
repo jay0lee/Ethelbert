@@ -57,10 +57,12 @@ window.X509={
 	}
 	,KeyParse:function(pem, True, False, mustPrivate){
 		var rtv={};
-		var Err=function(msg){ rtv.error=msg; False(msg, rtv); };
-		
-		if(!/BEGIN\s*(RSA|EC)?\s*(PUBLIC|PRIVATE)\s*KEY/.test(pem))
-			return Err(Lang('不是RSA或ECC密钥','Not an RSA or ECC key'));
+		var Err = function(msg) {
+			rtv.error = msg;
+			False(msg, rtv);
+		        };
+		if (!/BEGIN\s*(RSA|EC)?\s*(PUBLIC|PRIVATE)\s*KEY/.test(pem))
+			return Err('Not an RSA or ECC key');
 		rtv.type=RegExp.$1=="EC"?"ECC":RegExp.$1;
 		var isPKCS1=!!RegExp.$1;
 		var isPub=RegExp.$2=="PUBLIC";
@@ -156,7 +158,7 @@ window.X509={
 			Err(Lang('密钥转成CryptoKey失败：','Failed to convert key to CryptoKey: ')+e.message);
 		});
 	}
-	//解析出来的公钥转换成JSON Web Key(JWK)
+	
 	,PublicKeyJwk:function(info){ // https://www.rfc-editor.org/rfc/rfc7638
 		console.log('info');
 		console.log(info);
