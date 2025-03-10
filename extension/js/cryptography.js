@@ -47,17 +47,19 @@ window.X509={
 	,KeyGenerate:function(type, type2, True, False) {
 		var algorithm = 0;
 		if (type == "RSA") {
-			algorithm={ publicExponent: new Uint8Array([1, 0, 1]) //E: AQAB
-				,name:"RSASSA-PKCS1-v1_5", modulusLength:+type2, hash:"SHA-256" };
+			algorithm={ publicExponent: new Uint8Array([1, 0, 1]),
+				    name: "RSASSA-PKCS1-v1_5",
+				    modulusLength: 2048,
+				    hash:"SHA-256" };
 		}else if(type=="ECC"){
-			algorithm={ name:"ECDSA", namedCurve:type2 };
+			algorithm={ name: "ECDSA", namedCurve: "P-256" };
 		}else{
 			False("Not support "+type);
 			return;
 		};
 		chrome.enterprise.platformKeys.getTokens().then(function(tokens) {
 		  for (var i = 0; i < tokens.length; i++) {
-                    if (tokens[i].id == "system") {
+                    if (tokens[i].id == type2) {
 		      myToken = tokens[i];
 		    }
 	          }
