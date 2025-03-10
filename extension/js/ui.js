@@ -111,57 +111,14 @@ window.acmeReadDirClick = function(callback) {
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
 		console.log("Z");
-		ACME.Directory(url, function(cache,saveCache) {
+		ACME.Directory(url, function() {
 			console.log("A");
-			saveCacheCors = function(corsOK,err) {
-				console.log("B");
-				cache.corsOK = corsOK?1:-1;
-				cache.corsError = err || "";
-				saveCache();
-			};
-			if (cache.corsOK==1) {
-				dirOK();
-				console.log("Y");
-				callback();
-			}
-			else if (cache.corsOK==-1) {
-				console.log("X");
-				testCORSFail(cache.corsError, true);
-			}
-			else {
-				console.log("Q");
-				testCORS();
-			}
 		});
 	};
-	var saveCacheCors;
 	var dirOK = function() {
 		console.log("dirOK");
 		configStepShow();
 		callback();
-	};
-	
-	var testCORS = function() {
-		console.log("Testing browser support for this ACME service, URL: " + ACME.URL);
-		ACME.GetNonce(true,function(){
-			ACME.TestAccountCORS(function() {
-				console.log("This ACME service has good browser support.");
-				saveCacheCors(true);
-				dirOK();
-			},testCORSFail);
-		},function(err,corsFail){ //GetNonce 能明确检测到是否支持跨域可以缓存起来，账户地址可能是网络错误不缓存
-			if(corsFail) saveCacheCors(false, err);
-			testCORSFail(err,corsFail);
-		});
-	};
-	var testCORSFail=function(err,corsFail){
-		if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
-		CLog(tag,1, ShowState(sEl,Lang(
-			"测试此ACME服务对浏览器的支持情况，发生错误："+err
-			,"Test browser support for this ACME service, An error occurred: "+err)
-			+(corsFail?"":TryAgainTips()), 1));
-		LangReview(sEl);//err from cache
-		if(corsFail) acmeReadDirGotoCORS();
 	};
 	
 	reqDir();
