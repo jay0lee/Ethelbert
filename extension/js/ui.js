@@ -21,7 +21,7 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 var accountKey;
-var AccountKeyGenerate = async function(){
+var AccountKeyGenerate = function(){
 	var type = "ECC";
 	var type2 = X509.DefaultType2_ECC;
 	var type2N=X509.SupportECCType2[type2]||type2;
@@ -30,7 +30,7 @@ var AccountKeyGenerate = async function(){
 		accountKey = pem;
 	});
 };
-await AccountKeyGenerate();
+AccountKeyGenerate();
 
 var url;
 url = "https://ca.lan/acme/acme-da/directory"
@@ -689,7 +689,6 @@ window.Test_Restore_StepDownload=function(){
 })();
 
 window.addEventListener("load", (event) => {
-  console.log("page is fully loaded");
   window.acmeReadDirClick();
   window.configStepClick();
 });
