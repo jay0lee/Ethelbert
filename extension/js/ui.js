@@ -245,14 +245,12 @@ window.configStepClick = function() {
 	//ACME
 	var acmeNewAccount = function() {
 		console.log('in acmeNewAccount()');
-		var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在调用ACME服务的newAccount接口：","The newAccount interface that is calling the ACME service: ")+ACME.DirData.newAccount, 2));
-		ACME.StepAccount(function(){
-			if(UserClickSyncKill(id,tag,msg0))return;
+		ACME.StepAccount(function() {
 			acmeNewOrder();
-		},function(err){
+		}, function(err){
 			if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
-			CLog(tag,1, ShowState(sEl,Lang("调用ACME服务的newAccount接口：","Call the newAccount interface of the ACME service: ")
-				+ACME.DirData.newAccount+Lang("，发生错误："+err,", An error occurred: "+err), 1));
+			CLog(tag,1, ShowState(sEl,"Call the newAccount interface of the ACME service: "
+				+ ACME.DirData.newAccount + ", An error occurred: " + err, 1));
 		});
 	};
 	var acmeNewOrder=function() {
