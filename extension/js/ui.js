@@ -21,7 +21,7 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 var accountKey;
-var AccountKeyGenerate = function(callback){
+function AccountKeyGenerate(callback) {
 	var type = "ECC";
 	var type2 = X509.DefaultType2_ECC;
 	var type2N=X509.SupportECCType2[type2]||type2;
