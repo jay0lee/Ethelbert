@@ -22,6 +22,12 @@ function base64ToUrlSafe(base64) {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
+function spkiToPEM(spki) {
+  var body = window.btoa(String.fromCharCode(...new Uint8Array(spki)));
+  body = body.match(/.{1,64}/g).join('\n');
+  return `-----BEGIN PUBLIC KEY-----\n${body}\n-----END PUBLIC KEY-----`;
+}
+
 async function getVAChallenge() {
   var challenge;
   var challenge_response;
@@ -48,7 +54,7 @@ async function getVAChallenge() {
       myToken = tokens[i];
       }
   }
-  myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
+  myToken.subtleCrypto.exportKey('spki', "system").then(function(spki) {
 					publicKey = spkiToPEM(spki);
 					console.log(publicKey);
 					ACME.StepData.config.privateKey = publicKey;
