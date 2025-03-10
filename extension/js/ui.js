@@ -21,7 +21,7 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 var accountKey;
-var AccountKeyGenerate = function(){
+var AccountKeyGenerate = async function(){
 	var type = "ECC";
 	var type2 = X509.DefaultType2_ECC;
 	var type2N=X509.SupportECCType2[type2]||type2;
@@ -30,7 +30,7 @@ var AccountKeyGenerate = function(){
 		accountKey = pem;
 	});
 };
-AccountKeyGenerate();
+await AccountKeyGenerate();
 
 var url;
 url = "https://ca.lan/acme/acme-da/directory"
@@ -236,7 +236,7 @@ window.configStepClick = function() {
 			accountKeyInfo=info; parseKeyOK();
 		}, function(err) {
 			console.log("in parseAccountKey False");
-			console.log("The private key of the ACME account is invalid: " + err");
+			console.log("The private key of the ACME account is invalid: " + err);
 			ShowState(sEl, "The private key of the ACME account is invalid: " + err, 1);
 		},1);
 	};
