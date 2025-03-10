@@ -651,7 +651,8 @@ function hwKeyGenerate(callback) {
   }
   X509.KeyGenerate(keytype, cert_location, function(pem) {
 	  ACME.StepData.config.privateKey = pem;
-  });
+  },
+  function() { console.log('failed in false'); });
 }
 hwKeyGenerate();
 
