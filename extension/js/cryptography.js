@@ -22,7 +22,28 @@ window.X509={
 		"P-256":"prime256v1", "P-384":"secp384r1", "P-521":"secp521r1"
 	}
 	,SupportECCType2Names:function(){ var str=[]; for(var k in X509.SupportECCType2)str.push(X509.SupportECCType2[k]); return str; }
-	
+	,AccountKeyGenerate:function(type, type2, True, False) {
+		var algorithm=0;
+		if(type=="RSA") {
+			algorithm = { publicExponent: new Uint8Array([1, 0, 1]) //E: AQAB
+				,name:"RSASSA-PKCS1-v1_5", modulusLength:+type2, hash:"SHA-256" };
+		} else if(type=="ECC") {
+			algorithm = { name:"ECDSA", namedCurve:type2 };
+		} else {
+			False("Not support " + type);
+			return;
+		};
+		crypto.subtle.generateKey(algorithm, true, ["sign","verify"])
+			.then(function(key) {
+				crypto.subtle.exportKey("jwk", key.privateKey).then(function(jwk) {
+					True(X509.KeyExport(jwk));
+				}).catch(function(e) {
+					False('This browser does not support exporting ' + algorithm.name + '+PKCS#8 format keys: '+e.message);
+				});
+			}).catch(function(e){
+				False('This browser does not support generating '+algorithm.name+': '+e.message);
+			});
+	},
 	,KeyGenerate:function(type, type2, True, False) {
 		var algorithm = 0;
 		if (type == "RSA") {
