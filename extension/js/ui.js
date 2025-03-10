@@ -98,7 +98,6 @@ var UserClickSyncKill=function(id,tag,msg){
 
 
 /************** UI Step1: Read ACME service directory **************/
-//证书颁发机构单选按钮点击后处理
 var choiceAcmeURLChangeAfter=function(){
 	UserClickSyncID++;
 	
@@ -117,26 +116,23 @@ window.acmeReadDirClick = function(callback) {
 				cache.corsError = err || "";
 				saveCache();
 			};
-			if(cache.corsOK==1) dirOK();
+			if (cache.corsOK==1) dirOK();
 			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);
 			else testCORS();
 		});
 	};
 	var saveCacheCors;
 	var dirOK = function() {
-		if(UserClickSyncKill(id,tag,msg0)) return;
+		console.log("dirOK");
 		configStepShow();
-		CLog(tag,0, ShowState(sEl,Lang("读取服务目录成功，","Read service directory OK,")
-			+NextStepTips()+" URL="+ACME.URL, 2), ACME.DirData);
 		callback();
 	};
 	
 	var testCORS = function() {
-		if(UserClickSyncKill(id,tag,msg0))return;
-		msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在测试此ACME服务对浏览器的支持情况，","Testing browser support for this ACME service, ")+" URL="+ACME.URL, 2));
+		console.log("Testing browser support for this ACME service, URL: " + ACME.URL);
 		ACME.GetNonce(true,function(){
-			ACME.TestAccountCORS(function(){
-				CLog(tag,0, Lang("此ACME服务对浏览器的支持良好。","This ACME service has good browser support."));
+			ACME.TestAccountCORS(function() {
+				console.log("This ACME service has good browser support.");
 				saveCacheCors(true);
 				dirOK();
 			},testCORSFail);
