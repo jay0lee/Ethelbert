@@ -18,6 +18,7 @@ window.ACME={
 			if (!data.newOrder)
 				return False("No newOrder found in directory: " + FormatText(JSON.stringify(data)));
 			ACME.DirData = data;
+			True();
 		};
 		request(url, null, function(data) {
 			ok(data);
