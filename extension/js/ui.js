@@ -236,12 +236,9 @@ window.configStepClick = function() {
 	var parseKeyOK = function() {
 		console.log('in parseKeyOK()');
 		ACME.StepData.config = {
-			domains: domains
-			,privateKey: privateKeyInfo
-			,accountKey: accountKeyInfo
-			,email: email
-			,eabKid: eabKid
-			,eabKey: eabKey
+			domains: domains,
+			accountKey: accountKeyInfo,
+			email: email,
 		};
 		acmeNewAccount();
 	};
