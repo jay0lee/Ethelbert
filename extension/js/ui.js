@@ -622,7 +622,7 @@ var accountKey;
 function AccountKeyGenerate(callback) {
 	var type = "ECC";
 	var type2 = X509.DefaultType2_ECC;
-	X509.KeyGenerate(type, type2, function(pem) {
+	X509.AccountKeyGenerate(type, type2, function(pem) {
 		accountKey = pem;
 		callback();
 	});
