@@ -49,18 +49,6 @@ window.initMainUI=function(){
 		$(".donateWidget").css("position",null);
 	}
 	
-	CLog("initMainUI",0,Lang(
-`一些高级配置：
-- 设置 X509.DefaultType2_RSA="4096" 可以调整新生成的RSA密钥位数。
-- 设置 X509.DefaultType2_ECC="P-384" 可以调整新生成的ECC密钥曲线，X509.SupportECCType2内为支持的曲线。
-- 设置 DefaultDownloadFileNames 内的属性可以修改对应下载的文件默认名称。
-- UI调试：完成第二步后允许进行UI调试，手动调用 Test_AllStepData_Save() 保存数据，刷新页面可恢复界面。`,
-`Some advanced configurations:
-- Set X509.DefaultType2_RSA="4096" The number of newly generated RSA keys can be adjusted.
-- Set X509.DefaultType2_ECC="P-384" The newly generated ECC key curve can be adjusted. The supported curve is in X509.SupportECCType2.
-- Setting the property in DefaultDownloadFileNames can modify the default name of the corresponding downloaded file.
-- UI debugging: Allow UI debugging after completing the step 2 . Manually call Test_AllStepData_Save() to save the data, and refresh the page to restore the interface.`));
-	
 	initTest_Restore();
 	acmeReadDirGotoCORSInit();
 	downloadFileNameShow();
@@ -123,28 +111,27 @@ var choiceAcmeURLChangeAfter=function(){
 window.acmeReadDirClick = function(callback) {
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
-		ACME.Directory(url, function(cache,saveCache){
-			saveCacheCors=function(corsOK,err){
-				cache.corsOK=corsOK?1:-1;
-				cache.corsError=err||"";
+		ACME.Directory(url, function(cache,saveCache) {
+			saveCacheCors = function(corsOK,err) {
+				cache.corsOK = corsOK?1:-1;
+				cache.corsError = err || "";
 				saveCache();
-				callback();
 			};
-			if(cache.corsOK==1) dirOK();//已缓存的，此ACME服务正常
-			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);//不正常已缓存
-			else testCORS();//检测是否能正常调用接口，是否支持跨域
+			if(cache.corsOK==1) dirOK();
+			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);
+			else testCORS();
 		});
 	};
 	var saveCacheCors;
 	var dirOK = function() {
-		if(UserClickSyncKill(id,tag,msg0))return;
+		if(UserClickSyncKill(id,tag,msg0)) return;
 		configStepShow();
 		CLog(tag,0, ShowState(sEl,Lang("读取服务目录成功，","Read service directory OK,")
 			+NextStepTips()+" URL="+ACME.URL, 2), ACME.DirData);
+		callback();
 	};
 	
-	//ZeroSSL接口跨域支持太差，发现这种就直接在他们网站里面跑
-	var testCORS=function(){
+	var testCORS = function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
 		msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在测试此ACME服务对浏览器的支持情况，","Testing browser support for this ACME service, ")+" URL="+ACME.URL, 2));
 		ACME.GetNonce(true,function(){
