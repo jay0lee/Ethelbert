@@ -312,7 +312,7 @@ window.ACME={
 			var csr = await new Promise(function(resolve,reject){
 				X509.CreateCSR(config.privateKey, domains[0], domains, function(csr){
 					resolve(csr);
-				},function(err){
+				}, function(err){
 					reject(new Error(err));
 				});
 			});
