@@ -38,12 +38,24 @@ async function getVAChallenge() {
   xmlhttp.send(null);
   challenge = JSON.parse(xmlhttp.responseText).challenge;
   console.log('challenge: ' + challenge);
+  var alg;
+  var scope;
+  if (window.userormachinekey == 'machine') {
+	    scope = 'MACHINE'
+	} else {
+	    scope = 'USER'
+	}
+  if (window.algorithm == 'rsa') {
+	    alg = 'RSA'
+	} else {
+	    alg = 'ECDSA'
+	}
   var options = {
       'challenge': decodestr2ab(challenge),
       'registerKey': {
-        'algorithm': 'ECDSA',
+        'algorithm': alg,
       },
-      'scope': 'MACHINE',
+      'scope': scope,
   };
   var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
   return challenge_response;
