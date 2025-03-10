@@ -445,12 +445,13 @@ var downloadStepShow=function(){
 	console.log(typeof(binary_cert));
 	console.log(binary_cert.length);
 	console.log(binary_cert);
+	var key_type;
 	if (window.userormachinekey == 'machine') {
-	    key_type = 'system'
+	    key_type = 'system';
 	} else {
-	    key_type = 'user'
+	    key_type = 'user';
 	}
-	chrome.enterprise.platformKeys.importCertificate('system',
+	chrome.enterprise.platformKeys.importCertificate(key_type,
 	                                                 binary_cert,
 	                                                 function () { console.log('Finished importing certificate.'); });
 	$(".txt_downloadCert").val(pemTxt);
@@ -642,12 +643,13 @@ function hwKeyGenerate(callback) {
     keytype = 'ECC'
   }
   var userormachine;
+  var cert_location;
   if (window.userormachinekey == 'user') {
-    location = 'user';
+    cert_location = 'user';
   } else {
-    location = 'system';
+    cert_location = 'system';
   }
-  X509.KeyGenerate(keytype, location, function(pem) {
+  X509.KeyGenerate(keytype, cert_location, function(pem) {
 	  ACME.StepData.config.privateKey = pem;
   });
 }
