@@ -22,6 +22,8 @@ chrome.identity.getProfileUserInfo(function(id) {
 
 var url;
 chrome.storage.managed.get(['caurl', 'userormachinekey', 'algorithm']).then((data) => {
+    console.log('managed data:');
+    console.log(data);
     url = data.caurl;
     window.userormachinekey = data.userormachinekey;
     window.algorithm = data.algorithm;
