@@ -105,7 +105,7 @@ var choiceAcmeURLChangeAfter=function(){
 	$(".step1Show").show();
 	ShowState(".acmeReadDirState",false);
 	
-	if($(".in_acmeURL").val())acmeReadDirClick();
+	if($(".in_acmeURL").val()) acmeReadDirClick();
 };
 window.acmeReadDirClick = function(callback) {
 	var id =++ UserClickSyncID;
@@ -113,14 +113,9 @@ window.acmeReadDirClick = function(callback) {
 		console.log("Z");
 		ACME.Directory(url, function() {
 			console.log("A");
+			callback();
 		});
 	};
-	var dirOK = function() {
-		console.log("dirOK");
-		configStepShow();
-		callback();
-	};
-	
 	reqDir();
 };
 
