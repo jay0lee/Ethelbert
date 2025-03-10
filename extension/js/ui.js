@@ -230,9 +230,13 @@ window.configStepClick = function() {
 	console.log('in configStepClick()');
 	var accountKeyInfo, parseAccountKey = function() {
 		console.log('in parseAccountKey()')
-		X509.KeyParse(accountKey, function(info){
+		console.log('accountKey is ' + accountKey);
+		X509.KeyParse(accountKey, function(info) {
+			console.log("in parseAccountKey True");
 			accountKeyInfo=info; parseKeyOK();
-		},function(err){
+		}, function(err) {
+			console.log("in parseAccountKey False");
+			console.log("The private key of the ACME account is invalid: " + err");
 			ShowState(sEl, "The private key of the ACME account is invalid: " + err, 1);
 		},1);
 	};
