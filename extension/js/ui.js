@@ -120,15 +120,15 @@ var choiceAcmeURLChangeAfter=function(){
 	
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
-window.acmeReadDirClick = function() {
-	var id=++UserClickSyncID;
-	
+window.acmeReadDirClick = function(callback) {
+	var id =++ UserClickSyncID;
 	var reqDir = function() {
 		ACME.Directory(url, function(cache,saveCache){
 			saveCacheCors=function(corsOK,err){
 				cache.corsOK=corsOK?1:-1;
 				cache.corsError=err||"";
 				saveCache();
+				callback();
 			};
 			if(cache.corsOK==1) dirOK();//已缓存的，此ACME服务正常
 			else if(cache.corsOK==-1) testCORSFail(cache.corsError, true);//不正常已缓存
@@ -684,7 +684,8 @@ function AccountKeyGenerate(callback) {
 
 window.addEventListener("load", (event) => {
   AccountKeyGenerate(function() {  
-    window.acmeReadDirClick();
-    window.configStepClick();
+    window.acmeReadDirClick(function() {
+      window.configStepClick();
+    });
   });
 });
