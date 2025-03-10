@@ -12,19 +12,16 @@ window.ACME={
 	,SyncID: 0
 	,DirData: {}
 	,Directory:function(url, True, False) {
-		var id =++ ACME.SyncID;
 		var ok = function(data) {
 			console.log("data in Directory(): ");
 			console.log(data);
-			if (id != ACME.SyncID) return False("cancel");
-			var meta = data.meta || {};
 			if (!data.newOrder)
 				return False("No newOrder found in directory: " + FormatText(JSON.stringify(data)));
 			ACME.DirData = data;
 		};
 		request(url, null, function(data) {
 			ok(data);
-		},False);
+		}, False);
 	}
 	
 	,StepData:{}
@@ -68,26 +65,26 @@ window.ACME={
 			});
 		});
 	}
-	,GetNonce:function(useNew, True, False){
-		var old=ACME.PrevNonce;ACME.PrevNonce="";
-		if(!useNew && old) return True(old);//使用上次调用返回的值
+	,GetNonce:function(useNew, True, False) {
+		var old = ACME.PrevNonce;
+		ACME.PrevNonce = "";
+		if(!useNew && old) return True(old);
 		console.log(3)
-		request({url:ACME.DirData.newNonce
-			,method:"HEAD",response:false
-		}, null, function(data,xhr){
-			ACME.PrevNonce="";
-			//跨域无解 Chrome ZeroSSL: Refused to get unsafe header "Replay-Nonce" , 需要 Access-Control-Expose-Headers: Link, Replay-Nonce, Location
-			var val=xhr.getResponseHeader("Replay-Nonce");
-			if(!val){
-				False("GetNonce: "+Lang('此ACME服务对浏览器访问支持太差，无法跨域获取Replay-Nonce响应头。','This ACME service has too poor browser access support to get the Replay-Nonce response header across domains.'), true);
+		request({url: ACME.DirData.newNonce,
+			method:"HEAD",
+			 response:false},
+		null, function(data,xhr) {
+			ACME.PrevNonce = "";
+			var val = xhr.getResponseHeader("Replay-Nonce");
+			if(!val) {
+				False("GetNonce: "+'This ACME service has too poor browser access support to get the Replay-Nonce response header across domains.', true);
 				return;
 			}
 			True(val);
-		},function(err){
-			False("GetNonce: "+err);
+		}, function(err) {
+			False("GetNonce: " + err);
 		});
 	}
-	//测试账户接口的跨域访问
 	,TestAccountCORS:function(True,False){
 		console.log(4)
 		request({url:ACME.DirData.newAccount
@@ -104,48 +101,33 @@ window.ACME={
 	}
 	
 	//账户接口调用
-	,StepAccount:async function(True,False){
+	,StepAccount:async function(True,False) {
 		var id=++ACME.SyncID;
 		var tag="ACME.StepAccount";
 		CLog(tag, 0, "==========Account Start==========");
 		var Err="";
 		try{
 			await ACME._StepAccountA(id,tag);
-		}catch(e){
-			Err=e.message||"-";
+		} catch(e) {
+			Err = e.message || "-";
 			CLog(tag, 1, Err, e);
 		}
 		CLog(tag, 0, "==========Account End==========");
 		if(Err) False(Err)
 		else True();
-	} , _StepAccountA:async function(id,tag){
-		var url=ACME.DirData.newAccount,config=ACME.StepData.config;
-		var accountData={
-			contact:["mailto:"+config.email]
+	} , _StepAccountA:async function(id,tag) {
+		var url = ACME.DirData.newAccount
+		var config = ACME.StepData.config;
+		var accountData = {
+			contact: ["mailto:" + config.email]
 			,termsOfServiceAgreed:true
 		};
 		
-		//externalAccountRequired https://github.com/fszlin/certes/blob/08bf850bbed9e026c718f56f1bcc454afafb4f92/src/Certes/Acme/AccountContext.cs
-		if(ACME.StepData.needEAB){
-			var eab={
-				"protected":Json2UrlB64({ alg:"HS256", kid:config.eabKid, url:url })
-				,payload:Json2UrlB64(X509.PublicKeyJwk(config.accountKey))
-			};
-			var key=await crypto.subtle.importKey("raw", UrlB642Bytes(config.eabKey)
-				,{name:"HMAC",hash:"SHA-256"}, true, ["sign"]);
-			var data=Str2Bytes(eab["protected"]+"."+eab.payload);
-			var sign=await crypto.subtle.sign("HMAC", key, data);
-			eab.signature=Bytes2UrlB64(sign);
-			accountData.externalAccountBinding=eab;
-			CLog(tag,0 ,"externalAccountBinding", eab);
-		};
-		
-		//组装成jws，请求接口
-		var sendData=await ACME.GetJwsA({
-			jwk: X509.PublicKeyJwk(config.accountKey)
-			,nonce: await ACME.GetNonceA(true)
-			,url: url
-		},accountData);
+		var sendData = await ACME.GetJwsA({
+			jwk: X509.PublicKeyJwk(config.accountKey),
+			nonce: await ACME.GetNonceA(true),
+			url: url
+		}, accountData);
 		console.log(5)
 		var resp=await requestA(url, sendData);
 		if(id!=ACME.SyncID) throw new Error("cancel");
