@@ -195,8 +195,7 @@ window.configStepClick = function() {
 		console.log('in acmeNewAccount()');
 		ACME.StepAccount(function() {
 			acmeNewOrder();
-		}, function(err){
-			if(UserClickSyncKill(id,tag,msg0+" err: "+err))return;
+		}, function(err) {
 			CLog(tag,1, ShowState(sEl,"Call the newAccount interface of the ACME service: "
 				+ ACME.DirData.newAccount + ", An error occurred: " + err, 1));
 		});
