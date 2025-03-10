@@ -108,7 +108,7 @@ var choiceAcmeURLChangeAfter=function(){
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
 window.acmeReadDirClick = function(callback) {
-	console.log("callback is:";
+	console.log("callback is:");
 	console.log(callback);
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
