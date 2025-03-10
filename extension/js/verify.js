@@ -38,17 +38,14 @@ async function getVAChallenge() {
   xmlhttp.send(null);
   challenge = JSON.parse(xmlhttp.responseText).challenge;
   console.log('challenge: ' + challenge);
-  /*var options = {
+  var options = {
       'challenge': decodestr2ab(challenge),
       'registerKey': {
         'algorithm': 'ECDSA',
       },
       'scope': 'MACHINE',
-  };*/
-  var options = {challenge: challenge, registerKey: true}
-  console.log('options:');
-  console.log(options);
-  var challenge_response = await chrome.enterprise.platformKeys.challengeMachineKey(options);
+  };
+  var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
   return challenge_response;
 }
 
