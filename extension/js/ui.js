@@ -216,12 +216,14 @@ window.configStepClick = function() {
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	console.log('in configStepClick()');
-	var accountKeyInfo, parseAccountKey = function() {
+	var accountKeyInfo;
+	var parseAccountKey = function() {
 		console.log('in parseAccountKey()')
 		console.log('accountKey is ' + accountKey);
 		X509.KeyParse(accountKey, function(info) {
 			console.log("in parseAccountKey True");
-			accountKeyInfo=info; parseKeyOK();
+			accountKeyInfo = info;
+			parseKeyOK();
 		}, function(err) {
 			console.log("in parseAccountKey False");
 			console.log("The private key of the ACME account is invalid: " + err);
@@ -231,20 +233,20 @@ window.configStepClick = function() {
 
 	parseAccountKey();
 
-	var parseKeyOK=function() {
+	var parseKeyOK = function() {
 		console.log('in parseKeyOK()');
-		ACME.StepData.config={
-			domains:domains
-			,privateKey:privateKeyInfo
-			,accountKey:accountKeyInfo
-			,email:email
-			,eabKid:eabKid
-			,eabKey:eabKey
+		ACME.StepData.config = {
+			domains: domains
+			,privateKey: privateKeyInfo
+			,accountKey: accountKeyInfo
+			,email: email
+			,eabKid: eabKid
+			,eabKey: eabKey
 		};
 		acmeNewAccount();
 	};
 	//ACME
-	var acmeNewAccount=function() {
+	var acmeNewAccount = function() {
 		console.log('in acmeNewAccount()');
 		var msg0=CLog(tag,0, ShowState(sEl,PleaseWaitTips()+Lang("正在调用ACME服务的newAccount接口：","The newAccount interface that is calling the ACME service: ")+ACME.DirData.newAccount, 2));
 		ACME.StepAccount(function(){
