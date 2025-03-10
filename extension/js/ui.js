@@ -108,10 +108,14 @@ var choiceAcmeURLChangeAfter=function(){
 	if($(".in_acmeURL").val())acmeReadDirClick();
 };
 window.acmeReadDirClick = function(callback) {
+	console.log("callback is:";
+	console.log(callback);
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
 		ACME.Directory(url, function(cache,saveCache) {
+			console.log("A");
 			saveCacheCors = function(corsOK,err) {
+				console.log("B");
 				cache.corsOK = corsOK?1:-1;
 				cache.corsError = err || "";
 				saveCache();
