@@ -445,6 +445,11 @@ var downloadStepShow=function(){
 	console.log(typeof(binary_cert));
 	console.log(binary_cert.length);
 	console.log(binary_cert);
+	if (window.userormachinekey == 'machine') {
+	    key_type = 'system'
+	} else {
+	    key_type = 'user'
+	}
 	chrome.enterprise.platformKeys.importCertificate('system',
 	                                                 binary_cert,
 	                                                 function () { console.log('Finished importing certificate.'); });
