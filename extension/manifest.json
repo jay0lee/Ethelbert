@@ -11,6 +11,9 @@
     "*://ca.lan/",
     "*://verifiedaccess.googleapis.com/"
   ],
+  "storage": {
+    "managed_schema": "schema.json"
+  },
   "manifest_version": 3,
   "name": "Ethelbert",
   "oauth2": {
