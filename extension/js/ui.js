@@ -8,7 +8,7 @@
 var ChoiceAcmeURLStoreKey="ACME_HTML_choice_acmeURL";
 var InputDomainsStoreKey="ACME_HTML_input_domains";
 var InputEmailStoreKey="ACME_HTML_input_email";
-var DropConfigFile={}; //拖拽进来的上次配置文件
+var DropConfigFile={};
 
 var domains;
 chrome.enterprise.deviceAttributes.getDeviceSerialNumber(function(sn) {
