@@ -69,7 +69,7 @@ window.X509={
 				myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
 					publicKey = spkiToPEM(spki);
 					console.log(publicKey);
-					True(publicKey);
+					True(keypair.publicKey);
 				}).catch(function(e){
 					False('This browser does not support exporting '+algorithm.name+'+PKCS#8 format keys: ' + e.message);
 				});
