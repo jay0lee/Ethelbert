@@ -136,7 +136,7 @@ window.acmeReadDirClick = function() {
 		});
 	};
 	var saveCacheCors;
-	var dirOK=function(){
+	var dirOK = function() {
 		if(UserClickSyncKill(id,tag,msg0))return;
 		configStepShow();
 		CLog(tag,0, ShowState(sEl,Lang("读取服务目录成功，","Read service directory OK,")
@@ -233,8 +233,6 @@ window.configStepClick = function() {
 
 	var parseKeyOK=function() {
 		console.log('in parseKeyOK()');
-		if(UserClickSyncKill(id,tag,msg0))return;
-		
 		ACME.StepData.config={
 			domains:domains
 			,privateKey:privateKeyInfo
