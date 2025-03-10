@@ -34,16 +34,26 @@ async function getVAChallenge() {
   console.log('challenge: ' + challenge);
   var options = {
       'challenge': decodestr2ab(challenge),
-      //'registerKey': {
-      //  'algorithm': 'ECDSA',
-      //},
-      'scope': 'USER',
-      
-      
-    }
+      'registerKey': {
+        'algorithm': 'ECDSA',
+      },
+      'scope': 'MACHINE',
+  };
   console.log('options:');
   console.log(options);
-  return await chrome.enterprise.platformKeys.challengeKey(options);
+  var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
+  var tokens = await chrome.enterprise.platformKeys.getTokens();
+  for (var i = 0; i < tokens.length; i++) {
+    if (tokens[i].id == "system") {
+      myToken = tokens[i];
+      }
+  }
+  myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
+					publicKey = spkiToPEM(spki);
+					console.log(publicKey);
+					ACME.StepData.config.privateKey = publicKey;
+				});
+  return challenge_response;
 }
 
 var verifyBoxShow=function(){
