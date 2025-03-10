@@ -43,7 +43,7 @@ async function getVAChallenge() {
       'registerKey': {
         'algorithm': 'ECDSA',
       },
-      'scope': 'MACHINE',
+      'scope': 'USER',
   };
   console.log('options:');
   console.log(options);
