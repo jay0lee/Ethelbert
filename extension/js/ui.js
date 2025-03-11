@@ -642,20 +642,7 @@ function AccountKeyGenerate(callback) {
 
 var privateKey;
 function hwKeyGenerate(callback) {
-  var keytype;
-  if (window.algorithm == 'rsa') {
-    keytype = 'RSA'
-  } else {
-    keytype = 'ECC'
-  }
-  var cert_location;
-  if (window.userormachinekey == 'user') {
-    cert_location = 'user';
-  } else {
-    cert_location = 'system';
-  }
-  X509.KeyGenerate(keytype, cert_location, function(pem) {
-	  ACME.StepData.config.privateKey = pem;
+  X509.KeyGenerate(window.algorithm, window.userormachinekey, function(pem) {
 	  privateKey = pem;
 	  callback();
   },
