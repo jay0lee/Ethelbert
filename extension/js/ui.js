@@ -121,18 +121,10 @@ window.acmeReadDirClick = function(callback) {
 };
 
 /************** UI Step2: Certificate Configuration **************/
-var configStepShow=function(){
+var configStepShow = function() {
 	$(".step2Hide").hide();
 	$(".step2Show").show();
 	ShowState(".configStepState",false);
-	
-	$(".eabShow")[ACME.StepData.needEAB?'show':'hide']();
-	if(DropConfigFile.eabKid)$(".in_eab_kid").val(DropConfigFile.eabKid);
-	if(DropConfigFile.eabKey)$(".in_eab_key").val(DropConfigFile.eabKey);
-	
-	$(".termsAgreeBox")[ACME.StepData.termsURL?'show':'hide']();
-	$(".termsAgreeTips").html(Lang('我同意此证书颁发机构ACME服务的<a href="'+ACME.StepData.termsURL+'" target="_blank">服务条款</a>。', 'I agree to the <a href="'+ACME.StepData.termsURL+'" target="_blank">terms of service</a> for this Certificate Authority ACME Service.'));
-	$(".choice_termsAgree").prop("checked",true);
 	
 	var el=$(".in_domains");
 	var valS=localStorage[InputDomainsStoreKey];
@@ -165,6 +157,16 @@ window.configStepClick = function() {
 	var id=++UserClickSyncID;
 	var tag="Step-2",sEl=".configStepState";
 	console.log('in configStepClick()');
+	
+	var privateKeyInfo;
+	var parsePrivateKey = function() {
+		X509.KeyParse(privateKey, function(info) {
+			privateKeyInfo = info;
+			parseAccountKey();
+		},function(err) {
+			ShowState(sEl, "The private key of the certificate is invalid: " + err,1);
+		},1);
+	};
 	var accountKeyInfo;
 	var parseAccountKey = function() {
 		console.log('in parseAccountKey()')
@@ -180,15 +182,18 @@ window.configStepClick = function() {
 		},1);
 	};
 
-	parseAccountKey();
+	parsePrivateKey();
 
 	var parseKeyOK = function() {
 		console.log('in parseKeyOK()');
 		ACME.StepData.config = {
 			domains: domains,
+			privateKey: privateKeyInfo,
 			accountKey: accountKeyInfo,
 			email: email,
 		};
+		console.log('ACME.StepData.config:');
+		console.log(ACME.StepData.config);
 		acmeNewAccount();
 	};
 	//ACME
