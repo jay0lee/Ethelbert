@@ -640,6 +640,7 @@ function AccountKeyGenerate(callback) {
 	});
 };
 
+var privateKey;
 function hwKeyGenerate(callback) {
   var keytype;
   if (window.algorithm == 'rsa') {
@@ -656,15 +657,19 @@ function hwKeyGenerate(callback) {
   }
   X509.KeyGenerate(keytype, cert_location, function(pem) {
 	  ACME.StepData.config.privateKey = pem;
+	  privateKey = pem;
+	  callback();
   },
   function() { console.log('failed in false'); });
 }
 hwKeyGenerate();
 
 window.addEventListener("load", (event) => {
-  AccountKeyGenerate(function() {  
-    window.acmeReadDirClick(function() {
-      window.configStepClick();
+  hwKeyGenerate()(function() {
+    AccountKeyGenerate(function() {  
+      window.acmeReadDirClick(function() {
+        window.configStepClick();
+      });
     });
   });
 });
