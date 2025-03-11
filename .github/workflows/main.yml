@@ -10,7 +10,7 @@ on:
     - cron: '37 22 * * *'
 
 jobs:
-  builda:
+  build:
     runs-on: ubuntu-latest
     permissions:                # Job-level permissions configuration starts here
       contents: write           # 'write' access to repository contents
