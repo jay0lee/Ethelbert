@@ -44,37 +44,41 @@ window.X509={
 				False('This browser does not support generating '+algorithm.name+': '+e.message);
 			});
 	}
-	,KeyGenerate:function(type, type2, True, False) {
-		var algorithm = 0;
-		if (type == "RSA") {
-			algorithm={ publicExponent: new Uint8Array([1, 0, 1]),
-				    name: "RSASSA-PKCS1-v1_5",
-				    modulusLength: 2048,
-				    hash:"SHA-256" };
-		}else if(type=="ECC"){
-			algorithm={ name: "ECDSA", namedCurve: "P-256" };
-		}else{
-			False("Not support "+type);
+	,KeyGenerate:function(keytype, cert_location, True, False) {
+		if (keytype == "rsa") {
+			algorithm = { publicExponent: new Uint8Array([1, 0, 1]),
+				      name: "RSASSA-PKCS1-v1_5",
+				      modulusLength: 2048,
+				      hash:"SHA-256" };
+		}else if (type == "ecc") {
+			algorithm={ name: "ECDSA",
+				    namedCurve: "P-256" };
+		} else {
+			False("Not supported " + type);
 			return;
 		};
+		console.log("algorithm to use: ");
+		console.log(algorithm);
 		chrome.enterprise.platformKeys.getTokens().then(function(tokens) {
 		  for (var i = 0; i < tokens.length; i++) {
-                    if (tokens[i].id == type2) {
-		      myToken = tokens[i];
+                    if (tokens[i].id == cert_location) {
+		      var myToken = tokens[i];
+		      console.log("Token to use: ");
+		      console.log(myToken);
 		    }
 	          }
 	          myToken.subtleCrypto.generateKey(algorithm, false, ['sign', 'verify'])
-			.then(function(key){
+			.then(function(key) {
 				keyPair = key;
 				myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
 					publicKey = spkiToPEM(spki);
 					console.log(publicKey);
 					True(publicKey);
-				}).catch(function(e){
-					False('This browser does not support exporting '+algorithm.name+'+PKCS#8 format keys: ' + e.message);
+				}).catch(function(e) {
+					False('This browser does not support exporting ' + algorithm.name+' + PKCS#8 format keys: ' + e.message);
 				});
-			}).catch(function(e){
-				False('This browser does not support generating ' + algorithm.name+': ' + e.message);
+			}).catch(function(e) {
+				False('This browser does not support generating ' + algorithm.name + ': ' + e.message);
 			});
 	});
 	}
