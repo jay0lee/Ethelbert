@@ -57,6 +57,8 @@ async function getVAChallenge() {
 //      },
       'scope': scope,
   };
+  console.log("options for challengeKey():");
+  console.log(options);
   var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
   return challenge_response;
 }
