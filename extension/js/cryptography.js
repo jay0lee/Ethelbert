@@ -59,6 +59,10 @@ window.X509={
 		};
 		console.log("algorithm to use: ");
 		console.log(algorithm);
+		if (cert_location == 'machine') {
+			cert_location = 'system';
+		}
+		console.log('Location to use: ' + cert_location);
 		chrome.enterprise.platformKeys.getTokens().then(function(tokens) {
 		  for (var i = 0; i < tokens.length; i++) {
                     if (tokens[i].id == cert_location) {
