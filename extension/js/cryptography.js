@@ -50,11 +50,11 @@ window.X509={
 				      name: "RSASSA-PKCS1-v1_5",
 				      modulusLength: 2048,
 				      hash:"SHA-256" };
-		}else if (type == "ecc") {
-			algorithm={ name: "ECDSA",
-				    namedCurve: "P-256" };
+		} else if (keytype == "ecc") {
+			algorithm = { name: "ECDSA",
+				      namedCurve: "P-256" };
 		} else {
-			False("Not supported " + type);
+			False("Not supported " + ketype);
 			return;
 		};
 		console.log("algorithm to use: ");
