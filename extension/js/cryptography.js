@@ -62,7 +62,7 @@ window.X509={
 		chrome.enterprise.platformKeys.getTokens().then(function(tokens) {
 		  for (var i = 0; i < tokens.length; i++) {
                     if (tokens[i].id == cert_location) {
-		      var myToken = tokens[i];
+		      myToken = tokens[i];
 		      console.log("Token to use: ");
 		      console.log(myToken);
 		    }
