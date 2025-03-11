@@ -304,7 +304,9 @@ window.ACME={
 		if(Err) False(Err)
 		else True();
 	} , _StepFinalizeOrderA:async function(Progress,id,tag){
-		var order=ACME.StepData.order,config=ACME.StepData.config,domains=config.domains;
+		var order = ACME.StepData.order;
+		var config = ACME.StepData.config;
+		var domains = config.domains;
 		
 		//先请求finalize
 		if(!order.finalizeIsSend){
