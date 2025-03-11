@@ -648,7 +648,6 @@ function hwKeyGenerate(callback) {
   } else {
     keytype = 'ECC'
   }
-  var userormachine;
   var cert_location;
   if (window.userormachinekey == 'user') {
     cert_location = 'user';
@@ -662,10 +661,9 @@ function hwKeyGenerate(callback) {
   },
   function() { console.log('failed in false'); });
 }
-hwKeyGenerate();
 
 window.addEventListener("load", (event) => {
-  hwKeyGenerate()(function() {
+  hwKeyGenerate(function() {
     AccountKeyGenerate(function() {  
       window.acmeReadDirClick(function() {
         window.configStepClick();
