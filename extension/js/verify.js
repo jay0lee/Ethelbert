@@ -22,6 +22,17 @@ function base64ToUrlSafe(base64) {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
+var encodeV1Challenge = function(challenge) {
+  var jsonChallenge = JSON.parse(challenge);
+  var challengeData = jsonChallenge.challenge.data;
+  var challengeSignature = jsonChallenge.challenge.signature;
+
+  var protobufBinary = protoEncodeChallenge(
+      window.atob(challengeData), window.atob(challengeSignature));
+
+  return window.btoa(protobufBinary);
+};
+
 function spkiToPEM(spki) {
   var body = window.btoa(String.fromCharCode(...new Uint8Array(spki)));
   body = body.match(/.{1,64}/g).join('\n');
@@ -42,6 +53,9 @@ async function getVAChallenge() {
   xmlhttp.open('POST', challengeUrlString, false);
   xmlhttp.send(null);
   challenge = JSON.parse(xmlhttp.responseText).challenge;
+  if (window.api_ver == 'v1') {
+    challenge = encodeV1Challenge(challenge);
+  }
   console.log('challenge: ' + challenge);
   var alg;
   var scope;
