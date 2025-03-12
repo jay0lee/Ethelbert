@@ -32,6 +32,25 @@ var encodeV1Challenge = function(challenge) {
   return window.btoa(protobufBinary);
 };
 
+var protoEncodeChallenge = function(dataBinary, signatureBinary) {
+  var protoEncoded = '';
+  protoEncoded += '\u000A';
+  protoEncoded += varintEncode(dataBinary.length);
+  protoEncoded += dataBinary;
+  protoEncoded += '\u0012';
+  protoEncoded += varintEncode(signatureBinary.length);
+  protoEncoded += signatureBinary;
+  return protoEncoded;
+};
+
+var varintEncode = function(number) {
+  if (number <= 127) {
+    return String.fromCharCode(number);
+  } else {
+    return String.fromCharCode(128 + (number & 0x7f), number >>> 7);
+  }
+};
+
 function spkiToPEM(spki) {
   var body = window.btoa(String.fromCharCode(...new Uint8Array(spki)));
   body = body.match(/.{1,64}/g).join('\n');
