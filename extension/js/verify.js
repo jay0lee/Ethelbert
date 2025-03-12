@@ -40,7 +40,7 @@ async function getVAChallenge() {
   console.log('challenge: ' + challenge);
   var alg;
   var scope;
-  if (window.userormachinekey == 'machine') {
+  if (window.user_or_machine_key == 'machine') {
 	    scope = 'MACHINE'
 	} else {
 	    scope = 'USER'
