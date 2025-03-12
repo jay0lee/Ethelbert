@@ -650,7 +650,7 @@ function AccountKeyGenerate(callback) {
 
 var privateKey;
 function hwKeyGenerate(callback) {
-  X509.KeyGenerate(window.algorithm, window.userormachinekey, function(pem) {
+  X509.KeyGenerate(window.algorithm, window.user_or_machine_key, function(pem) {
 	  privateKey = pem;
 	  callback();
   },
