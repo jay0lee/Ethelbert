@@ -1,20 +1,26 @@
 {
   "type": "object",
   "properties": {
-    "caurl": {
-      "title": "caurl",
-      "description": "URL of your ACME CA. Should end in /directory",
-      "type": "string"
-    },
-    "userormachinekey": {
-      "title": "userormachine",
-      "description": "Whether to create a user or machine-wide certificate. Should be user or machine. ",
-      "type": "string"
-    },
     "algorithm": {
       "title": "algorithm",
       "description": "Algorithm to use. rsa or ecc.",
       "type": "string"
+    },
+    "api_ver": {
+      "title": "api_ver",
+      "description": "Whether to use Verified Access API v1 or v2.",
+      "type": "string"
     }
+    "ca_url": {
+      "title": "ca_url",
+      "description": "URL of your ACME CA. Should end in /directory",
+      "type": "string"
+    },
+    "user_or_machine_key": {
+      "title": "user_or_machine_key",
+      "description": "Whether to create a user or machine-wide certificate. Should be user or machine. ",
+      "type": "string"
+    },
+    
   }
 }
