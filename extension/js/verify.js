@@ -32,7 +32,12 @@ async function getVAChallenge() {
   var challenge;
   var challenge_response;
   var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
-  var challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?key=' + apiKey;
+  var va_url;
+  if (window.api_ver == 'v1') {
+    challengeUrlString = 'https://verifiedaccess.googleapis.com/v1/challenge?key=' + apiKey;
+  } else {
+    challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?key=' + apiKey;
+  }
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open('POST', challengeUrlString, false);
   xmlhttp.send(null);
