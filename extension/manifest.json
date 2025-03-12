@@ -4,7 +4,8 @@
       "16": "images/icon16.png",
       "24": "images/icon24.png",
       "32": "images/icon32.png"
-    }
+    },
+    "default_title": "Ethelbert Certificate Installer"
   },
   "background": {
     "service_worker": "sw.js",
