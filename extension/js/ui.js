@@ -33,7 +33,7 @@ chrome.storage.managed.get(['algorithm',
     console.log(data);
     window.algorithm = data.algorithm;
     window.api_ver = data.api_ver;
-    url = data.ca_url;
+    ca_url = data.ca_url;
     window.user_or_machine_key = data.user_or_machine_key;
 });
 
@@ -120,7 +120,7 @@ window.acmeReadDirClick = function(callback) {
 	var id =++ UserClickSyncID;
 	var reqDir = function() {
 		console.log("Z");
-		ACME.Directory(url, function() {
+		ACME.Directory(ca_url, function() {
 			console.log("A");
 			callback();
 		});
