@@ -23,9 +23,8 @@ function base64ToUrlSafe(base64) {
 }
 
 var encodeV1Challenge = function(challenge) {
-  var jsonChallenge = JSON.parse(challenge);
-  var challengeData = jsonChallenge.challenge.data;
-  var challengeSignature = jsonChallenge.challenge.signature;
+  var challengeData = challenge.data;
+  var challengeSignature = challenge.signature;
 
   var protobufBinary = protoEncodeChallenge(
       window.atob(challengeData), window.atob(challengeSignature));
