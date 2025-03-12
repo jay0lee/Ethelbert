@@ -20,13 +20,21 @@ chrome.identity.getProfileUserInfo(function(id) {
 	email = id.email;
 });
 
-var url;
-chrome.storage.managed.get(['caurl', 'userormachinekey', 'algorithm']).then((data) => {
+// defaults
+window.algorithm = 'ecc';
+window.api_ver = 'v2';
+var ca_url = 'https://ca.example.com/acme/acme/directory";
+window.user_or_machine_key = 'machine';
+chrome.storage.managed.get(['algorithm',
+			    'api_ver',
+			    'ca_url',
+			    'user_or_machine_key']).then((data) => {
     console.log('managed data:');
     console.log(data);
-    url = data.caurl;
-    window.userormachinekey = data.userormachinekey;
     window.algorithm = data.algorithm;
+    window.api_ver = data.api_ver;
+    url = data.ca_url;
+    window.user_or_machine_key = data.user_or_machine_key;
 });
 
 function decodestr2ab(str) {
@@ -451,7 +459,7 @@ var downloadStepShow=function(){
 	console.log(binary_cert.length);
 	console.log(binary_cert);
 	var key_type;
-	if (window.userormachinekey == 'machine') {
+	if (window.user_or_machine_key == 'machine') {
 	    key_type = 'system';
 	} else {
 	    key_type = 'user';
