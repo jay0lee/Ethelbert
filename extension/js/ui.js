@@ -23,7 +23,7 @@ chrome.identity.getProfileUserInfo(function(id) {
 // defaults
 window.algorithm = 'ecc';
 window.api_ver = 'v2';
-var ca_url = 'https://ca.example.com/acme/acme/directory";
+var ca_url = 'https://ca.example.com/acme/acme/directory';
 window.user_or_machine_key = 'machine';
 chrome.storage.managed.get(['algorithm',
 			    'api_ver',
