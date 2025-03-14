@@ -671,7 +671,7 @@ function AccountKeyGenerate(callback) {
 	});
 };
 
-/*
+
 var privateKey;
 function hwKeyGenerate(callback) {
   X509.KeyGenerate(window.algorithm, window.user_or_machine_key, function(pem) {
@@ -680,7 +680,7 @@ function hwKeyGenerate(callback) {
   },
   function() { console.log('failed in false'); });
 }
-*/
+
 window.addEventListener("load", (event) => {
   hwKeyGenerate(function() {
     AccountKeyGenerate(function() {  
