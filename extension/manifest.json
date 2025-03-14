@@ -35,7 +35,8 @@
     "enterprise.platformKeys",
     "storage",
     "identity",
-    "identity.email"
+    "identity.email",
+    "platformKeys"
   ],
   "storage": {
     "managed_schema": "schema.json"
