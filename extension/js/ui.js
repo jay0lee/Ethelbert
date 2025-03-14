@@ -682,11 +682,11 @@ function hwKeyGenerate(callback) {
 }
 */
 window.addEventListener("load", (event) => {
-//  hwKeyGenerate(function() {
+  hwKeyGenerate(function() {
     AccountKeyGenerate(function() {  
       window.acmeReadDirClick(function() {
         window.configStepClick();
       });
     });
-//  });
+  });
 });
