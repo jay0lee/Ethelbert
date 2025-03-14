@@ -34,21 +34,21 @@ chrome.storage.managed.get(['algorithm',
 			    'user_or_machine_key']).then((data) => {
     console.log('managed data:');
     console.log(data);
-    if (algorithm_choices.includes(data.algorithm.toLowerCase()) {
+    if (algorithm_choices.includes(data.algorithm.toLowerCase())) {
         window.algorithm = data.algorithm.toLowerCase();
     } else {
 	console.log('ERROR: ' + data.algorithm + 'is not one of the valid algorithms of ( ' +
 		    algorithm_choices.join(', ') + ' ). Using default value of ' +
 		    algorithm_choices[0]);
     }
-    if (api_choices.includes(data.api_ver.toLowerCase()) {
+    if (api_choices.includes(data.api_ver.toLowerCase())) {
         window.api_ver = data.api_ver.toLowerCase();
     } else {
 	console.log('ERROR: ' + data.api_ver + 'is not one of the valid API versions of ( ' +
 		    api_choices.join(', ') + ' ). Using default value of ' +
 		    api_choices[0]);
     }
-    if (key_choices.includes(data.user_or_machine_key.toLowerCase()) {
+    if (key_choices.includes(data.user_or_machine_key.toLowerCase())) {
         window.user_or_machine_key = data.user_or_machine_key.toLowerCase();
     } else {
 	console.log('ERROR: ' + data.user_or_machine_key + 'is not one of the valid key choices of ( ' +
