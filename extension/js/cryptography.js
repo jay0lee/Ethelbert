@@ -78,7 +78,10 @@ window.X509={
 			.then(function(key) {
 				keyPair = key;
 				myToken.subtleCrypto.exportKey('spki', keyPair.publicKey).then(function(spki) {
+					console.log('spki Key');
+					console.log(spki);
 					publicKey = spkiToPEM(spki);
+					console.log('pem Key');
 					console.log(publicKey);
 					True(publicKey);
 				}).catch(function(e) {
