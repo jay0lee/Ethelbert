@@ -21,20 +21,43 @@ chrome.identity.getProfileUserInfo(function(id) {
 });
 
 // defaults
-window.algorithm = 'ecc';
-window.api_ver = 'v2';
+var algorithm_choices = ['ecc', 'rsa'];
+var api_choices = ['v2', 'v1'];
+var key_choices = ['machine', 'user'];
+window.algorithm = algorithm_choices[0];
+window.api_ver = api_choices[0];
 var ca_url = 'https://ca.example.com/acme/acme/directory';
-window.user_or_machine_key = 'machine';
+window.user_or_machine_key = key_choices[0];
 chrome.storage.managed.get(['algorithm',
 			    'api_ver',
 			    'ca_url',
 			    'user_or_machine_key']).then((data) => {
     console.log('managed data:');
     console.log(data);
-    window.algorithm = data.algorithm;
-    window.api_ver = data.api_ver;
+    if (algorithm_choices.includes(data.algorithm.toLowerCase()) {
+        window.algorithm = data.algorithm.toLowerCase();
+    } else {
+	console.log('ERROR: ' + data.algorithm + 'is not one of the valid algorithms of ( ' +
+		    algorithm_choices.join(', ') + ' ). Using default value of ' +
+		    algorithm_choices[0]);
+    }
+    if (api_choices.includes(data.api_ver.toLowerCase()) {
+        window.api_ver = data.api_ver.toLowerCase();
+    } else {
+	console.log('ERROR: ' + data.api_ver + 'is not one of the valid API versions of ( ' +
+		    api_choices.join(', ') + ' ). Using default value of ' +
+		    api_choices[0]);
+    }
+    if (key_choices.includes(data.user_or_machine_key.toLowerCase()) {
+        window.user_or_machine_key = data.user_or_machine_key.toLowerCase();
+    } else {
+	console.log('ERROR: ' + data.user_or_machine_key + 'is not one of the valid key choices of ( ' +
+		    key_choices.join(', ') + ' ). Using default value of ' +
+		    key_choices[0]);
+    }
+    window.api_ver = data.api_ver.toLowerCase();
     ca_url = data.ca_url;
-    window.user_or_machine_key = data.user_or_machine_key;
+    window.user_or_machine_key = data.user_or_machine_key.toLowerCase();
 });
 
 function decodestr2ab(str) {
@@ -648,6 +671,7 @@ function AccountKeyGenerate(callback) {
 	});
 };
 
+/*
 var privateKey;
 function hwKeyGenerate(callback) {
   X509.KeyGenerate(window.algorithm, window.user_or_machine_key, function(pem) {
@@ -656,13 +680,13 @@ function hwKeyGenerate(callback) {
   },
   function() { console.log('failed in false'); });
 }
-
+*/
 window.addEventListener("load", (event) => {
-  hwKeyGenerate(function() {
+//  hwKeyGenerate(function() {
     AccountKeyGenerate(function() {  
       window.acmeReadDirClick(function() {
         window.configStepClick();
       });
     });
-  });
+//  });
 });
