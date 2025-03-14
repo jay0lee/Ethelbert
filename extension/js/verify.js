@@ -89,9 +89,9 @@ async function getVAChallenge() {
 	}
   var options = {
       'challenge': decodestr2ab(challenge),
-//      'registerKey': {
-//        'algorithm': alg,
-//      },
+      'registerKey': {
+        'algorithm': alg,
+      },
       'scope': scope,
   };
   console.log("options for challengeKey():");
