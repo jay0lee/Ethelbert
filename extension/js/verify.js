@@ -60,12 +60,14 @@ function spkiToPEM(spki) {
 async function getVAChallenge() {
   var challenge;
   var challenge_response;
-  var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
+  //var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
+  var tokenResult = await chrome.identity.getAuthToken();
+  var authToken = tokenResult.token;
   var va_url;
   if (window.api_ver == 'v1') {
-    challengeUrlString = 'https://verifiedaccess.googleapis.com/v1/challenge?key=' + apiKey;
+    challengeUrlString = 'https://verifiedaccess.googleapis.com/v1/challenge?access_token=' + authToken;
   } else {
-    challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?key=' + apiKey;
+    challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?access_token=' + authToken;
   }
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open('POST', challengeUrlString, false);
