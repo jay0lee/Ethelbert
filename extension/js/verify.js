@@ -94,11 +94,11 @@ async function getVAChallenge() {
 	}
   var options = {
       'challenge': decodestr2ab(challenge),
-      'registerKey': {
-        'algorithm': alg,
-      },
       'scope': scope,
   };
+  if (window.register_token) {
+    options.registerKey = {algorithm: alg}
+  }
   console.log("options for challengeKey():");
   console.log(options);
   var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
