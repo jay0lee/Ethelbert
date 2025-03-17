@@ -111,8 +111,11 @@ async function getVAChallenge() {
                 };
                 console.log("options for challengeKey():");
                 console.log(options);
-                var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
-                return challenge_response;
+                chrome.enterprise.platformKeys.challengeKey(options, function (challenge_response) {
+                  console.log('challenge response:');
+		  console.log(challenge_response);
+		  return challenge_response;
+		});
         });
 }
 
