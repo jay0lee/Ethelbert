@@ -16,6 +16,11 @@
       "description": "URL of your ACME CA. Should end in /directory",
       "type": "string"
     },
+    "register_token": {
+      "title": "register_token",
+      "description": "true or false, whether to register a key during verified access challenge response",
+      "type": "boolean"
+    },
     "user_or_machine_key": {
       "title": "user_or_machine_key",
       "description": "Whether to create a user or machine-wide certificate. Should be user or machine. ",
