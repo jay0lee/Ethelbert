@@ -60,7 +60,9 @@ function spkiToPEM(spki) {
 async function getVAChallenge() {
   var challenge;
   var challenge_response;
-  //var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
+  // we need interactive since we're not in Chrome web store
+  // we can make it non-interactive though by adding client ID/socpe
+  // to the domain-wide delegation page.
   details = {interactive: true};
   var tokenResult = await chrome.identity.getAuthToken(details);
   var authToken = tokenResult.token;
