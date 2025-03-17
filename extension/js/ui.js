@@ -51,9 +51,9 @@ chrome.storage.managed.get(['algorithm',
 		    api_choices.join(', ') + ' ). Using default value of ' +
 		    api_choices[0]);
     }
-    if (data.register_token.toLowerCase() == "true") {
+    if (data.register_token == true) {
 	window.register_token = true;
-    } else if (data.register_token.toLowerCase() == "false") {
+    } else if (data.register_token == false) {
 	window.register_token = false;
     } else {
 	console.log('ERROR: ' + data.register_token + ' is true or false, the only valid values for register_token');
