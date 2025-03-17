@@ -72,37 +72,48 @@ async function getVAChallenge() {
   } else {
     challengeUrlString = 'https://verifiedaccess.googleapis.com/v2/challenge:generate?access_token=' + authToken;
   }
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('POST', challengeUrlString, false);
-  xmlhttp.send(null);
-  challenge = JSON.parse(xmlhttp.responseText).challenge;
-  if (window.api_ver == 'v1') {
-    challenge = encodeV1Challenge(challenge);
+  //var xmlhttp = new XMLHttpRequest();
+  //xmlhttp.open('POST', challengeUrlString, false);
+  //xmlhttp.send(null);
+  //challenge = JSON.parse(xmlhttp.responseText).challenge;
+  headers = {
+	  Authorization: "Bearer " + authToken
   }
-  console.log('challenge: ' + challenge);
-  var alg;
-  var scope;
-  if (window.user_or_machine_key == 'machine') {
-	    scope = 'MACHINE'
-	} else {
-	    scope = 'USER'
-	}
-  if (window.algorithm == 'rsa') {
-	    alg = 'RSA'
-	} else {
-	    alg = 'ECDSA'
-	}
-  var options = {
-      'challenge': decodestr2ab(challenge),
-//      'registerKey': {
-//        'algorithm': alg,
-//      },
-      'scope': scope,
-  };
-  console.log("options for challengeKey():");
-  console.log(options);
-  var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
-  return challenge_response;
+  resp = fetch(challengeUrlString,
+		     {method: "POST",
+		      headers: headers,
+		      body: ''})
+	.then((response) => response.json())
+        .then((data) => {
+		challenge = data.challenge;
+                if (window.api_ver == 'v1') {
+                  challenge = encodeV1Challenge(challenge);
+                }
+                console.log('challenge: ' + challenge);
+                var alg;
+                var scope;
+                if (window.user_or_machine_key == 'machine') {
+	          scope = 'MACHINE'
+	        } else {
+	          scope = 'USER'
+	        }
+                if (window.algorithm == 'rsa') {
+	          alg = 'RSA'
+	        } else {
+	          alg = 'ECDSA'
+	        }
+                var options = {
+                'challenge': decodestr2ab(challenge),
+                'registerKey': {
+                  'algorithm': alg,
+                },
+                'scope': scope,
+                };
+                console.log("options for challengeKey():");
+                console.log(options);
+                var challenge_response = await chrome.enterprise.platformKeys.challengeKey(options);
+                return challenge_response;
+        });
 }
 
 var verifyBoxShow=function(){
