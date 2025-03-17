@@ -61,7 +61,8 @@ async function getVAChallenge() {
   var challenge;
   var challenge_response;
   //var apiKey = 'AIzaSyAS5-tV_UcjJiM9dkz7e_FsG1qWMdHGr2k';
-  var tokenResult = await chrome.identity.getAuthToken(details: {interactive: true});
+  details = {interactive: true};
+  var tokenResult = await chrome.identity.getAuthToken("details": details);
   var authToken = tokenResult.token;
   var va_url;
   if (window.api_ver == 'v1') {
