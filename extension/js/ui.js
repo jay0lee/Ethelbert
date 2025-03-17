@@ -24,13 +24,16 @@ chrome.identity.getProfileUserInfo(function(id) {
 var algorithm_choices = ['ecc', 'rsa'];
 var api_choices = ['v2', 'v1'];
 var key_choices = ['machine', 'user'];
+var register_token_choices = [true, false];
 window.algorithm = algorithm_choices[0];
 window.api_ver = api_choices[0];
 var ca_url = 'https://ca.example.com/acme/acme/directory';
+window.register_token = register_token_choices[0];
 window.user_or_machine_key = key_choices[0];
 chrome.storage.managed.get(['algorithm',
 			    'api_ver',
 			    'ca_url',
+			    'register_token',
 			    'user_or_machine_key']).then((data) => {
     console.log('managed data:');
     console.log(data);
@@ -44,9 +47,16 @@ chrome.storage.managed.get(['algorithm',
     if (api_choices.includes(data.api_ver.toLowerCase())) {
         window.api_ver = data.api_ver.toLowerCase();
     } else {
-	console.log('ERROR: ' + data.api_ver + 'is not one of the valid API versions of ( ' +
+	console.log('ERROR: ' + data.api_ver + ' is not one of the valid API versions of ( ' +
 		    api_choices.join(', ') + ' ). Using default value of ' +
 		    api_choices[0]);
+    }
+    if (data.register_token.toLowerCase() == "true") {
+	window.register_token = true;
+    } else if (data.register_token.toLowerCase() == "false") {
+	window.register_token = false;
+    } else {
+	console.log('ERROR: ' + data.register_token + ' is true or false, the only valid values for register_token');
     }
     if (key_choices.includes(data.user_or_machine_key.toLowerCase())) {
         window.user_or_machine_key = data.user_or_machine_key.toLowerCase();
