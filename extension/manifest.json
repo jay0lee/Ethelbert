@@ -7,10 +7,6 @@
     },
     "default_title": "Ethelbert Certificate Installer"
   },
-  "background": {
-    "service_worker": "sw.js",
-    "type": "module"
-  },
   "description": "Experimental ChromeOS extension implementing the ACME protocol for hardware-backed client certificates",
   "host_permissions": [
     "*://ca.lan/",
