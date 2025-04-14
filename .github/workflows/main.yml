@@ -48,7 +48,8 @@ jobs:
       run: |
         key_file="${HOME}/ext.pem"
         echo -e "$EXTENSION_KEY" > "$key_file"
-        file "$key_file"
+        echo "Our extension ID will be:"
+        bash ./get-extension-id.sh "$key_file"
         google-chrome-stable --pack-extension=./extension --pack-extension-key="$key_file"
         mv -v extension.crx hosted/ethelbert.crx
 
