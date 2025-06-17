@@ -1,7 +1,7 @@
 # Ethelbert
 ## An experimental ChromeOS extension implementing the ACME protocol for hardware-backed client certificates.
 
-"Ethelbert" is the middle name of Wile E. Coyote who loved using ACME products but wasn't very good at it.
+"Ethelbert" is the middle name of [Wile E. Coyote](https://en.wikipedia.org/wiki/Wile_E._Coyote_and_the_Road_Runner) who loved using ACME products but wasn't very good at it.
 
 <img src="https://m.media-amazon.com/images/I/41I87vso8mL.jpg" alt="Wile E Coyote riding an ACME brand rocket"/>
 
