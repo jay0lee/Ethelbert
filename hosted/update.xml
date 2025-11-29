@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
   <app appid='ggikmmknoohmifpoiieoldligpffmjbl'>
-	  <updatecheck codebase='https://jay0lee.github.io/Ethelbert/hosted/ethelbert.crx' version='2025.1128.2242.24' />
+	  <updatecheck codebase='https://jay0lee.github.io/Ethelbert/hosted/ethelbert.crx' version='2025.1129.2242.36' />
   </app>
 </gupdate>
